@@ -1,5 +1,13 @@
 import styles from './Segment.module.css'
 
+function updateGlow() {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const calcHeight = Math.min(h, w / 2);
+  const glowSize = calcHeight * 0.05; // 5% от высоты калькулятора
+  document.documentElement.style.setProperty('--glow-px', `${glowSize}px`);
+}
+
 export function Dot({isOn}){
     return(
         <svg className={`${styles.off} ${isOn ? styles.on : ''}`} viewBox='0 0 100 200'>

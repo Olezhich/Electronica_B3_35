@@ -10,9 +10,6 @@ function Display({Str}) {
 
     return(
         <div className={styles.display}>
-            {/* <svg className={styles.svgBackground} viewBox="0 0 1500 600" >
-                <rect x="0" y="60" width="1500" height="500" rx="120"/>
-            </svg> */}
             <div className={styles.symbolsContainer}>
                 {chars}
             </div>

@@ -1,0 +1,11 @@
+.buttonsContainer{
+    position: absolute;
+    top: 20%;
+    left: 8%;
+    width: 84%;
+    height: 72%;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
