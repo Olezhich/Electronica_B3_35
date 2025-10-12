@@ -1,11 +1,75 @@
+/* button{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 56%;
+
+    appearance: none;
+    border: none;
+    padding: 0;
+    margin: 0; */
+    
+    /* border-radius: 5px;
+    border-top: 3px solid rgb(30, 30, 30);
+    border-right: 3px solid rgb(30, 30, 30);
+    border-left: 1px solid rgb(30, 30, 30);
+    border-bottom: 1px solid rgb(30, 30, 30); */
+
+    /* box-shadow:
+
+    inset -1px 1px 0 0 rgba(255, 255, 255, 0.8),
+
+    inset 2px -2px 0 0 rgba(0, 0, 0, 0.4); */
+
+    /* background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+} */
+
 .keyDefault{
     position: absolute;
     top: 5%;
     left: 5%;
     width: 90%;
-    height: 50%;
-    
-    border: 2px solid black;
+    height: 56%;
+
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    box-sizing: border-box;
+
+    border-top: 3px solid rgb(30, 30, 30);
+    border-right: 3px solid rgb(30, 30, 30);
+    border-left: 1px solid rgb(30, 30, 30);
+    border-bottom: 1px solid rgb(30, 30, 30);
+
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 6px;
+
+    box-shadow: 
+        inset -1px 1px 1px gray,
+        inset 1px -1px 1px black;
+
+    transition: 0.1s ease;
+}
+
+.keyDefault:active {
+    filter: brightness(0.75);
+
+    border-top: 1px solid rgb(30, 30, 30);
+    border-right: 1px solid rgb(30, 30, 30);
+    border-left: 3px solid rgb(30, 30, 30);
+    border-bottom: 3px solid rgb(30, 30, 30);
+
+    border-bottom-left-radius: 7px;
+    border-top-right-radius: 5px;
+
+    box-shadow: 
+        inset -1px 1px 1px black;
 }
 
 .cell{
