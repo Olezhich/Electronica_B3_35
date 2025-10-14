@@ -1,10 +1,10 @@
 import styles from './Button.module.css'
-import f_img from '../../../assets/f.png'
 
-function Button({keyText}){
+function Button({keyImg, keyRed}){
     return(
         <div className={styles.cell}>
-            <div className={styles.keyDefault} style={{backgroundImage: `url(${f_img})`}}>{keyText}</div>
+            <div className={`${styles.keyDefault} ${keyRed ? styles.keyRed : ''}`} 
+            style={{backgroundImage: `url(${keyImg})`}} />
         </div>
     );
 }

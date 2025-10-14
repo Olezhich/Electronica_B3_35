@@ -1,31 +1,10 @@
-/* button{
-    position: absolute;
-    top: 5%;
-    left: 5%;
-    width: 90%;
-    height: 56%;
-
-    appearance: none;
-    border: none;
-    padding: 0;
-    margin: 0; */
-    
-    /* border-radius: 5px;
-    border-top: 3px solid rgb(30, 30, 30);
-    border-right: 3px solid rgb(30, 30, 30);
-    border-left: 1px solid rgb(30, 30, 30);
-    border-bottom: 1px solid rgb(30, 30, 30); */
-
-    /* box-shadow:
-
-    inset -1px 1px 0 0 rgba(255, 255, 255, 0.8),
-
-    inset 2px -2px 0 0 rgba(0, 0, 0, 0.4); */
-
-    /* background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-} */
+:root{
+    --key-default-col: rgb(35, 37, 43);
+    --key-default-col-d: hsl(225, 10%, 5%);
+    --key-default-col-l: hsl(225, 10%, 50%);
+    --key-red-col: hsl(3, 69%, 60%);
+    --key-red-col-l: hsl(3, 69%, 70%);
+}
 
 .keyDefault{
     position: absolute;
@@ -34,16 +13,21 @@
     width: 90%;
     height: 56%;
 
-    background-size: contain;
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
 
     box-sizing: border-box;
 
-    border-top: 3px solid rgb(30, 30, 30);
-    border-right: 3px solid rgb(30, 30, 30);
-    border-left: 1px solid rgb(30, 30, 30);
-    border-bottom: 1px solid rgb(30, 30, 30);
+    border-top: 3px;
+    border-right: 3px;
+    border-left: 1px;
+    border-bottom: 1px;
+
+    border-style: solid;
+    border-color: var(--key-default-col);
+    border-bottom-color: var(--key-default-col-d);
+    border-left-color: var(--key-default-col-d);
 
     border-bottom-left-radius: 5px;
     border-top-left-radius: 6px;
@@ -51,25 +35,38 @@
     border-bottom-right-radius: 6px;
 
     box-shadow: 
-        inset -1px 1px 1px gray,
-        inset 1px -1px 1px black;
+        inset -1px 1px 1px var(--key-default-col-l),
+        inset 1px -1px 1px var(--key-default-col-d);
 
     transition: 0.1s ease;
+}
+
+.keyRed{
+    border-color: var(--key-red-col);
+    border-bottom-color: var(--key-default-col);
+    border-left-color: var(--key-default-col);
+
+    box-shadow:
+        inset -1px 1px 1px var(--key-red-col-l),
+        inset 1px -1px 1px var(--key-default-col-d);
 }
 
 .keyDefault:active {
     filter: brightness(0.75);
 
-    border-top: 1px solid rgb(30, 30, 30);
-    border-right: 1px solid rgb(30, 30, 30);
-    border-left: 3px solid rgb(30, 30, 30);
-    border-bottom: 3px solid rgb(30, 30, 30);
+    border-top: 1px;
+    border-right: 1px;
+    border-left: 3px;
+    border-bottom: 3px;
+
+    border-color: var(--key-default-col);
+    border-style: solid;
 
     border-bottom-left-radius: 7px;
     border-top-right-radius: 5px;
 
     box-shadow: 
-        inset -1px 1px 1px black;
+        inset -1px 1px 1px var(--key-default-col-d);
 }
 
 .cell{
