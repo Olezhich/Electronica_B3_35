@@ -4,10 +4,10 @@ import Switches from './Switches/Switches';
 import styles from './Controls.module.css'
 
 
-function Controls(){
+function Controls({PowerSwitch}){
     return (
         <div className={styles.controlsContainer}>
-            <Switches />
+            <Switches PowerSwitch={PowerSwitch}/>
             <Buttons />
         </div>
     );
