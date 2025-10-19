@@ -33,7 +33,7 @@ import eq_img from '../../assets/eq.png'
 
 
 
-function Buttons(){
+function Buttons({ButtonHandler}){
     const key_images = [
         c_img, um_img, arc_img, vp_img,f_img,
         seven_img, eight_img, nine_img, op_img, cp_img,
@@ -42,13 +42,25 @@ function Buttons(){
         zero_img, dot_img, pi_img, lr_img,eq_img,
     ];
 
-    const buttonGen = (_, idx) => {
+    const key_values = [
+        '','','','','',
+        7, 8, 9, '','',
+        4, 5, 6,'','',
+        1, 2, 3,'','',
+        0,'','','','',
+    ];
+
+    const keyContext = Array.from({length: 25}, (_, idx) => ({img: key_images[idx], val: key_values[idx]}))
+
+    const buttonGen = (ctx, idx) => {
         return (<Button key={idx} 
-                keyImg={key_images[idx]} 
-                keyRed={idx == 0? true:false}/>);
+                keyImg={ctx.img} 
+                keyRed={idx == 0? true:false}
+                keyVal={ctx.val}
+                handler={ButtonHandler}/>);
     };
 
-    const buttons = Array.from({length: 25}, buttonGen);
+    const buttons = Array.from(keyContext, buttonGen);
 
     return (
         <div className={styles.buttonsContainer}>

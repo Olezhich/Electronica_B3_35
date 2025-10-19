@@ -31,6 +31,9 @@ function Display({Str}) {
             <div className={styles.symbolsContainer}>
                 {DisplayChars}
             </div>
+            <svg className={styles.svgBackground} viewBox='0 0 300 100'>
+                <rect width="100%" height="100%" rx="20" ry="20" />
+            </svg>
         </div>
     );
 }
