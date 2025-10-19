@@ -18,7 +18,7 @@ function Symbol({symbolStr}){
             <DSegment isOn={SegmentHandler(symbolStr, '0235689')} />
             <ESegment isOn={SegmentHandler(symbolStr, '0268')} />
             <FSegment isOn={SegmentHandler(symbolStr, '045689')} />
-            <GSegment isOn={SegmentHandler(symbolStr, '2345689')} />
+            <GSegment isOn={SegmentHandler(symbolStr, '2345689-')} />
         </div>
     );
 }

@@ -28,14 +28,22 @@ function App() {
 
   const ButtonHandler = (key) =>{
     if(typeof key === 'number' && !isNaN(key)){
-      setDisplayRegister(prev => ({...prev, mantissa: prev.mantissa * 10 + key}));
-      console.log(DisplayRegister);
+      setDisplayRegister(prev => ({...prev, 
+        mantissa: (prev.decimalPow < 0? prev.mantissa + Math.round(key * (10**prev.decimalPow) *  10 **(-prev.decimalPow))/10 **(-prev.decimalPow) : prev.mantissa * 10 + key),
+        decimalPow: (prev.decimalPow < 0? prev.decimalPow - 1 : prev.decimalPow),
+        hasDecimal: (prev.decimalPow < 0? true : false),
+      }));
+    }else if(key === '/-/'){
+      setDisplayRegister(prev => ({...prev, mantissa: -1 * prev.mantissa}));
+    }else if(key === '.'){
+      setDisplayRegister(prev => ({...prev, decimalPow: -1}))
     }
+    console.log(DisplayRegister);
   };
 
   useEffect(() => {
     if(PowerState === true){
-      setSymbolStr(' ' + String(DisplayRegister.mantissa) + (DisplayRegister.hasDecimal? '' : '.'));
+      setSymbolStr(((DisplayRegister.mantissa < 0) ? '' : ' ') + String(DisplayRegister.mantissa) + (DisplayRegister.hasDecimal? '' : '.'));
     }else{
       setSymbolStr('');
     }
