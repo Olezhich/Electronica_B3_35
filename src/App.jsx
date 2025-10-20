@@ -11,7 +11,9 @@ function App() {
   const [SymbolStr, setSymbolStr] = useState('');
 
   const [DisplayRegister, setDisplayRegister] = useState({
+    str: '',
     mantissa: 0,
+    overflow: false,
     digits: 1,
     hasDecimal: false,
     decimalPow: 1,
@@ -22,31 +24,46 @@ function App() {
     Handler: () => {
       setPowerState(prev => !prev);
       if(!PowerState)
-        setDisplayRegister({mantissa: 0, digits: 1, hasDecimal: false, decimalPow: 1,});
+        setDisplayRegister({str: '', mantissa: 0, overflow: false, digits: 1, hasDecimal: false, decimalPow: 1,});
     },
   };
 
+  const IsOverflow = (mantissa) => {
+    const ms = String(mantissa);
+    let len = ms.length;
+    len = (ms.includes('-') ? len - 1 : len);
+    len = (ms.includes('.') ? len - 1 : len);
+    return (len >= 8);
+  };
+
   const ButtonHandler = (key) =>{
-    if(typeof key === 'number' && !isNaN(key)){
-      setDisplayRegister(prev => ({...prev, 
-        mantissa: (prev.decimalPow < 0? prev.mantissa + Math.round(key * (10**prev.decimalPow) *  10 **(-prev.decimalPow))/10 **(-prev.decimalPow) : prev.mantissa * 10 + key),
-        decimalPow: (prev.decimalPow < 0? prev.decimalPow - 1 : prev.decimalPow),
-        hasDecimal: (prev.decimalPow < 0? true : false),
-      }));
+    if(DisplayRegister.overflow === true)
+      return;
+    if('0123456789'.includes(key)){
+      setDisplayRegister(prev => ({...prev,
+        str: prev.str + key}));
     }else if(key === '/-/'){
-      setDisplayRegister(prev => ({...prev, mantissa: -1 * prev.mantissa}));
+      setDisplayRegister(prev => ({...prev, 
+        str: ((prev.str === '' ? '' : prev.str.startsWith('-') ? prev.str.slice(1) : '-' + prev.str))}));
     }else if(key === '.'){
-      setDisplayRegister(prev => ({...prev, decimalPow: -1}))
+      setDisplayRegister(prev => ({...prev, 
+        str: (prev.str.includes('.') ? prev.str : prev.str + '.')}))
     }
-    console.log(DisplayRegister);
+    setDisplayRegister(prev => ({...prev, 
+      mantissa: Number(prev.str)}));
+    setDisplayRegister(prev => ({...prev, 
+      overflow: IsOverflow(prev.mantissa)}));
   };
 
   useEffect(() => {
     if(PowerState === true){
-      setSymbolStr(((DisplayRegister.mantissa < 0) ? '' : ' ') + String(DisplayRegister.mantissa) + (DisplayRegister.hasDecimal? '' : '.'));
+      setSymbolStr(((DisplayRegister.mantissa < 0) ? '' : ' ') + 
+        String(DisplayRegister.mantissa) + 
+        (String(DisplayRegister.mantissa).includes('.') ? '' : '.'));
     }else{
       setSymbolStr('');
     }
+    console.log(DisplayRegister);
   }, [PowerState, DisplayRegister]);
 
   return (
