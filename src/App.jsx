@@ -1,19 +1,60 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Display from './Display/Display';
 import Controls from './Controls/Controls';
 
+import { KeyHandler } from './Core/KeyHandler';
+
 import body from './assets/body.png'
+import { ResetRegister } from './Core/Register';
 
 
 function App() {
+  const [PowerState, setPowerState] = useState(false);
   const [SymbolStr, setSymbolStr] = useState('');
+
+  const [DisplayRegister, setDisplayRegister] = useState(ResetRegister());
+
+  const PowerSwitch = {
+    State: PowerState,
+    Handler: () => {
+      setPowerState(prev => !prev);
+      if(!PowerState)
+        setDisplayRegister(ResetRegister());
+    },
+  };
+
+  const IsOverflow = (mantissa) => {
+    const ms = String(mantissa);
+    let len = ms.length;
+    len = (ms.includes('-') ? len - 1 : len);
+    len = (ms.includes('.') ? len - 1 : len);
+    return (len >= 8);
+  };
+
+  const ButtonHandler = (key) =>{
+    setDisplayRegister(prev => {
+      const result = KeyHandler({ prev, key });
+      return result ?? prev;
+    });
+  };
+
+  useEffect(() => {
+    if(PowerState === true){
+      setSymbolStr(((DisplayRegister.mantissa < 0) ? '' : ' ') + 
+        String(DisplayRegister.mantissa) + 
+        (String(DisplayRegister.mantissa).includes('.') ? '' : '.'));
+    }else{
+      setSymbolStr('');
+    }
+    console.log(DisplayRegister);
+  }, [PowerState, DisplayRegister]);
 
   return (
     <main>
       <div className="body" style={{backgroundImage: `url(${body})`}}>
         <Display Str={SymbolStr} />
-        <Controls />
+        <Controls PowerSwitch={PowerSwitch} ButtonHandler={ButtonHandler}/>
       </div>
       
       <div className="buttons">

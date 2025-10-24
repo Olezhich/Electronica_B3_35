@@ -12,10 +12,11 @@
     position: absolute;
     left: 0;
     top: 0;
+    filter: brightness(0.75);
     /*filter: blur(0.7px);*/
 }
 
 .on {
-    filter: /*blur(0.7px)*/ drop-shadow(0px 0px 10px var(--display-on-col));
+    filter: /*blur(0.7px)*/ /*drop-shadow(0px 0px 10px var(--display-on-col))*/ drop-shadow(0px 0px 3px var(--display-on-col));
     fill: var(--display-on-col);
 }

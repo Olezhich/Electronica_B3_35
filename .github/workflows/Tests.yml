@@ -1,0 +1,22 @@
+name: Tests
+
+on:
+  pull_request:
+    branches[ main ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+  steps:
+    - name: Get repository code
+      uses: actions/checkout@v4
+
+    - name: Setup node
+      uses: actions/setup-node@v4
+
+    - name: install dependencies
+      run: npm ci
+
+    - name: Run Tests
+      run: npm test
