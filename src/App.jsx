@@ -3,28 +3,24 @@ import { useEffect, useState } from 'react'
 import Display from './Display/Display';
 import Controls from './Controls/Controls';
 
+import { KeyHandler } from './Core/KeyHandler';
+
 import body from './assets/body.png'
+import { ResetRegister } from './Core/Register';
 
 
 function App() {
   const [PowerState, setPowerState] = useState(false);
   const [SymbolStr, setSymbolStr] = useState('');
 
-  const [DisplayRegister, setDisplayRegister] = useState({
-    str: '',
-    mantissa: 0,
-    overflow: false,
-    digits: 1,
-    hasDecimal: false,
-    decimalPow: 1,
-  });
+  const [DisplayRegister, setDisplayRegister] = useState(ResetRegister());
 
   const PowerSwitch = {
     State: PowerState,
     Handler: () => {
       setPowerState(prev => !prev);
       if(!PowerState)
-        setDisplayRegister({str: '', mantissa: 0, overflow: false, digits: 1, hasDecimal: false, decimalPow: 1,});
+        setDisplayRegister(ResetRegister());
     },
   };
 
@@ -37,22 +33,10 @@ function App() {
   };
 
   const ButtonHandler = (key) =>{
-    if(DisplayRegister.overflow === true)
-      return;
-    if('0123456789'.includes(key)){
-      setDisplayRegister(prev => ({...prev,
-        str: prev.str + key}));
-    }else if(key === '/-/'){
-      setDisplayRegister(prev => ({...prev, 
-        str: ((prev.str === '' ? '' : prev.str.startsWith('-') ? prev.str.slice(1) : '-' + prev.str))}));
-    }else if(key === '.'){
-      setDisplayRegister(prev => ({...prev, 
-        str: (prev.str.includes('.') ? prev.str : prev.str + '.')}))
-    }
-    setDisplayRegister(prev => ({...prev, 
-      mantissa: Number(prev.str)}));
-    setDisplayRegister(prev => ({...prev, 
-      overflow: IsOverflow(prev.mantissa)}));
+    setDisplayRegister(prev => {
+      const result = KeyHandler({ prev, key });
+      return result ?? prev;
+    });
   };
 
   useEffect(() => {
