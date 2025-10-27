@@ -6,6 +6,7 @@ export function DisplayString(DisplayRegister){
     displayStr += ' '.repeat(10 - currentLen);
     let degreeStr = ((DisplayRegister.degree < 0) ? '' : ' ') + 
         ((DisplayRegister.degree > 1  || DisplayRegister.degree < 0) ? 
-            String(DisplayRegister.degree) : '');
+            String(DisplayRegister.degree) : (DisplayRegister.inputDegree && DisplayRegister.dStr ? String(DisplayRegister.degree) : ''));
+    console.log(displayStr + degreeStr);
     return (displayStr + degreeStr);
 }

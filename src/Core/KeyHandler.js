@@ -1,4 +1,4 @@
-import { IsOverflow } from "./Register.js";
+import { IsOverflow, ResetRegister } from "./Register.js";
 
 export function KeyHandler({prev, key}){
     let newMStr = prev.mStr;
@@ -29,6 +29,8 @@ export function KeyHandler({prev, key}){
         newMStr = prev.mStr.includes('.') ? prev.mStr : prev.mStr + '.';
     }else if(key === 'vp'){
         newInputDegree = true;
+    }else if(key == 'C'){
+        return(ResetRegister())
     }
     newMantissa = newMStr === '' ? 0 : Number(newMStr);
     newDegree = newDStr === '' ? 1 : Number(newDStr);

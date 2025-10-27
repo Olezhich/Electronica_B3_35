@@ -4,6 +4,7 @@ import Display from './Display/Display';
 import Controls from './Controls/Controls';
 
 import { KeyHandler } from './Core/KeyHandler';
+import { DisplayString } from './Core/DisplayHandler'; 
 
 import body from './assets/body.png'
 import { ResetRegister } from './Core/Register';
@@ -24,14 +25,6 @@ function App() {
     },
   };
 
-  const IsOverflow = (mantissa) => {
-    const ms = String(mantissa);
-    let len = ms.length;
-    len = (ms.includes('-') ? len - 1 : len);
-    len = (ms.includes('.') ? len - 1 : len);
-    return (len >= 8);
-  };
-
   const ButtonHandler = (key) =>{
     setDisplayRegister(prev => {
       const result = KeyHandler({ prev, key });
@@ -41,9 +34,7 @@ function App() {
 
   useEffect(() => {
     if(PowerState === true){
-      setSymbolStr(((DisplayRegister.mantissa < 0) ? '' : ' ') + 
-        String(DisplayRegister.mantissa) + 
-        (String(DisplayRegister.mantissa).includes('.') ? '' : '.'));
+      setSymbolStr(DisplayString(DisplayRegister));
     }else{
       setSymbolStr('');
     }
