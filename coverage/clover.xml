@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1761337308144" clover="3.2.0">
-  <project timestamp="1761337308145" name="All files">
-    <metrics statements="36" coveredstatements="34" conditionals="48" coveredconditionals="38" methods="4" coveredmethods="4" elements="88" coveredelements="76" complexity="0" loc="36" ncloc="36" packages="1" files="3" classes="3"/>
+<coverage generated="1761586452702" clover="3.2.0">
+  <project timestamp="1761586452702" name="All files">
+    <metrics statements="37" coveredstatements="35" conditionals="52" coveredconditionals="40" methods="4" coveredmethods="4" elements="93" coveredelements="79" complexity="0" loc="37" ncloc="37" packages="1" files="3" classes="3"/>
     <file name="DisplayHandler.js" path="/Users/olegopolskiy/Desktop/Dev/GIT/ElectronicaB3_35/Electronica_B3_35/src/Core/DisplayHandler.js">
-      <metrics statements="5" coveredstatements="5" conditionals="10" coveredconditionals="10" methods="1" coveredmethods="1"/>
+      <metrics statements="6" coveredstatements="6" conditionals="14" coveredconditionals="12" methods="1" coveredmethods="1"/>
       <line num="2" count="13" type="cond" truecount="2" falsecount="0"/>
       <line num="5" count="13" type="stmt"/>
       <line num="6" count="13" type="stmt"/>
       <line num="7" count="13" type="cond" truecount="2" falsecount="0"/>
       <line num="10" count="13" type="stmt"/>
+      <line num="11" count="13" type="stmt"/>
     </file>
     <file name="KeyHandler.js" path="/Users/olegopolskiy/Desktop/Dev/GIT/ElectronicaB3_35/Electronica_B3_35/src/Core/KeyHandler.js">
       <metrics statements="25" coveredstatements="23" conditionals="34" coveredconditionals="24" methods="1" coveredmethods="1"/>

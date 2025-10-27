@@ -4,6 +4,7 @@ import Display from './Display/Display';
 import Controls from './Controls/Controls';
 
 import { KeyHandler } from './Core/KeyHandler';
+import { DisplayString } from './Core/DisplayHandler'; 
 
 import body from './assets/body.png'
 import { ResetRegister } from './Core/Register';
@@ -41,9 +42,7 @@ function App() {
 
   useEffect(() => {
     if(PowerState === true){
-      setSymbolStr(((DisplayRegister.mantissa < 0) ? '' : ' ') + 
-        String(DisplayRegister.mantissa) + 
-        (String(DisplayRegister.mantissa).includes('.') ? '' : '.'));
+      setSymbolStr(DisplayString(DisplayRegister));
     }else{
       setSymbolStr('');
     }
