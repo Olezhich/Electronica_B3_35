@@ -25,14 +25,6 @@ function App() {
     },
   };
 
-  const IsOverflow = (mantissa) => {
-    const ms = String(mantissa);
-    let len = ms.length;
-    len = (ms.includes('-') ? len - 1 : len);
-    len = (ms.includes('.') ? len - 1 : len);
-    return (len >= 8);
-  };
-
   const ButtonHandler = (key) =>{
     setDisplayRegister(prev => {
       const result = KeyHandler({ prev, key });
