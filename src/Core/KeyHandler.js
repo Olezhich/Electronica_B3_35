@@ -3,20 +3,7 @@ import { IsOverflow, ResetRegister } from "./Register.js";
 export function KeyHandler({prev, key}){
     let res = {...prev}
     if('0123456789'.includes(key)){
-        if(prev.mOverflow && !prev.inputDegree)
-            return null;
-        else if(!prev.inputDegree)
-            res.mStr = prev.mStr + key;
-        else if(Math.abs(prev.degree) * 10 > 90){
-            if(key === '0')
-                return null;
-            res.dStr = (prev.dStr.startsWith('-') ? '-' : '') + key;
-        }
-        else if(prev.dStr === '' && key === '0')
-            return null;
-        else{
-            res.dStr = prev.dStr + key;
-        }
+        NumberHandler({prev, key, res});
     }else if(key === '/-/'){
         if(prev.inputDegree){
             if(prev.dStr !== '')
@@ -38,4 +25,21 @@ export function KeyHandler({prev, key}){
     res.degree = res.dStr === '' ? 1 : Number(res.dStr);
     res.mOverflow = IsOverflow(res.mantissa);
     return(res);
+}
+
+function NumberHandler({prev, key, res}){
+    if(prev.mOverflow && !prev.inputDegree)
+        return null;
+    else if(!prev.inputDegree)
+        res.mStr = prev.mStr + key;
+    else if(Math.abs(prev.degree) * 10 > 90){
+        if(key === '0')
+            return null;
+        res.dStr = (prev.dStr.startsWith('-') ? '-' : '') + key;
+    }
+    else if(prev.dStr === '' && key === '0')
+        return null;
+    else{
+        res.dStr = prev.dStr + key;
+    }   
 }

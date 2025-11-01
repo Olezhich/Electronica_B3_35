@@ -8,6 +8,7 @@ import { DisplayString } from './Core/DisplayHandler';
 
 import body from './assets/body.png'
 import { ResetRegister } from './Core/Register';
+import { ResetSelfState } from './Core/SelfState';
 
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
   const [SymbolStr, setSymbolStr] = useState('');
 
   const [DisplayRegister, setDisplayRegister] = useState(ResetRegister());
+
+  const [SelfState, setSelfState] = useState(ResetSelfState());
 
   const PowerSwitch = {
     State: PowerState,
@@ -27,7 +30,7 @@ function App() {
 
   const ButtonHandler = (key) =>{
     setDisplayRegister(prev => {
-      const result = KeyHandler({ prev, key });
+      const result = KeyHandler({ prev, key, SelfState, setSelfState });
       return result ?? prev;
     });
   };
