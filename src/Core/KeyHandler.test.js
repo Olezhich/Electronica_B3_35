@@ -8,6 +8,10 @@ test.each([
         comment: "Example 2: Enter number -6.2831"},
     {inputSequence: ['1', '.', '3', '8', '/-/', 'vp', '1', '1', '/-/'], expected: {...ResetRegister(), mantissa: -1.38, degree: -11}, 
         comment: "Example 3: Enter number -0." + '0'.repeat(10)+'138 = -1.38 * 10 ^ -11'},
+    {inputSequence: ['1', '.', '3', '8', '/-/', 'vp', '0', '1', '0', '/-/'], expected: {...ResetRegister(), mantissa: -1.38, degree: -10}, 
+        comment: "Example 3: Enter number -0." + '0'.repeat(10)+'138 = -1.38 * 10 ^ -10'},
+    {inputSequence: ['2', 'vp', '2', '3', '/-/', '3', '2', '/-/'], expected: {...ResetRegister(), mantissa: 2, degree: 32}, 
+        comment: "Example 3: Enter number -0." + '0'.repeat(10)+'138 = -1.38 * 10 ^ -10'},
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();
     for(key of inputSequence){
