@@ -1,5 +1,6 @@
 import { KeyHandler } from "./KeyHandler.js";
 import { ResetRegister } from "./Register.js";
+import { ResetSelfState } from "./SelfState.js";
 
 test.each([
     {inputSequence: ['.', '6', '7', '1', '5', '4'], expected: {...ResetRegister(), mantissa: 0.67154}, 
@@ -14,8 +15,11 @@ test.each([
         comment: "Example 3: Enter number -0." + '0'.repeat(10)+'138 = -1.38 * 10 ^ -10'},
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();
+    let SelfState = ResetSelfState();
     for(key of inputSequence){
-        prev = KeyHandler({prev, key}) ?? prev;
+        res = KeyHandler({prev, key, SelfState});
+        prev = res.register ?? prev;
+        SelfState = res.state ?? state;
     };
     expect(prev.mantissa).toEqual(expected.mantissa);
     expect(prev.degree).toEqual(expected.degree);

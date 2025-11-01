@@ -4,7 +4,7 @@ export function ResetRegister() {
             mStr: '',
             dStr: '',
             mantissa: 0,
-            degree: 1,
+            degree: 0,
             mOverflow: false,
             inputDegree: false,
         }
