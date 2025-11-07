@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.55% </span>
+                <span class="strong">56.25% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/58</span>
+                <span class='fraction'>27/48</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">51.72% </span>
+                <span class="strong">57.69% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>30/58</span>
+                <span class='fraction'>30/52</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.55% </span>
+                <span class="strong">56.25% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>27/58</span>
+                <span class='fraction'>27/48</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -151,7 +151,11 @@
 <a name='L86'></a><a href='#L86'>86</a>
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">40x</span>
@@ -218,18 +222,22 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -306,20 +314,24 @@ function <span class="fstat-no" title="function not covered" >FunctionHandler(</
 <span class="cstat-no" title="statement not covered" >        newMantissa = Math.sqrt(mantissa);</span>
 <span class="cstat-no" title="statement not covered" >        newDegree = degree / 2;</span>
 <span class="cstat-no" title="statement not covered" >        console.log('SQRT func: ',newMantissa, newDegree);</span>
-<span class="cstat-no" title="statement not covered" >        while(newMantissa &lt; 100_000_000 &amp;&amp; newDegree &gt; 0){</span>
-<span class="cstat-no" title="statement not covered" >            newDegree -= 1;</span>
-<span class="cstat-no" title="statement not covered" >            newMantissa *= 10;</span>
-        }
-<span class="cstat-no" title="statement not covered" >        while(String(newMantissa).length &lt; 9  &amp;&amp; newDegree &lt; 0){ </span>
-<span class="cstat-no" title="statement not covered" >            newDegree += 1;</span>
-<span class="cstat-no" title="statement not covered" >            newMantissa /= 10;</span>
-        }
-<span class="cstat-no" title="statement not covered" >        if(String(newMantissa).length &gt; 9){</span>
-<span class="cstat-no" title="statement not covered" >            while(newMantissa &gt; 10){</span>
-<span class="cstat-no" title="statement not covered" >                newDegree += 1;</span>
-<span class="cstat-no" title="statement not covered" >            newMantissa /= 10;</span>
-            }
-        }
+        // while(newMantissa &lt; 100_000_000 &amp;&amp; newDegree &gt; 0){
+        //     newDegree -= 1;
+        //     newMantissa *= 10;
+        // }
+        // while(String(newMantissa).startsWith('0')  &amp;&amp; newDegree &lt; 0){ 
+        //     newDegree += 1;
+        //     newMantissa /= 10;
+        // }
+        // while(String(newMantissa).length &lt; 9){
+        //     newDegree += 1;
+        //     newMantissa /= 10;
+        // }
+        // if(String(newMantissa).length &gt; 9){
+        //     while(newMantissa &gt; 10){
+        //         newDegree += 1;
+        //     newMantissa /= 10;
+        //     }
+        // }
 <span class="cstat-no" title="statement not covered" >        res.dStr = String(newDegree);</span>
 <span class="cstat-no" title="statement not covered" >        newMantissa = String(newMantissa.toFixed(7));</span>
 <span class="cstat-no" title="statement not covered" >        res.mStr = (newMantissa.includes('.')? newMantissa.slice(0,9):newMantissa.slice(0,8));</span>
@@ -334,7 +346,7 @@ function <span class="fstat-no" title="function not covered" >FunctionHandler(</
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-01T11:48:45.162Z
+                at 2025-11-07T06:09:51.558Z
             </div>
         <script src="prettify.js"></script>
         <script>
