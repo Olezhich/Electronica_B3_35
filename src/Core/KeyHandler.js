@@ -1,4 +1,4 @@
-import { IsOverflow, ResetRegister } from "./Register.js";
+import { IsOverflow, ResetRegister, NormalizeRegister} from "./Register.js";
 
 export function KeyHandler({prev, key, SelfState}){
     let res = {...prev};
@@ -83,11 +83,19 @@ function FunctionHandler({prev, key, res}){
         //     newMantissa /= 10;
         //     }
         // }
-        res.dStr = String(newDegree);
-        newMantissa = String(newMantissa.toFixed(7));
-        res.mStr = (newMantissa.includes('.')? newMantissa.slice(0,9):newMantissa.slice(0,8));
+        // res.dStr = String(newDegree);
+        // newMantissa = String(newMantissa.toFixed(7));
+        // res.mStr = (newMantissa.includes('.')? newMantissa.slice(0,9):newMantissa.slice(0,8));
+
+        const processed = NormalizeRegister(newMantissa, newDegree);
+
+        res.mStr = String(processed.mantissa);
+        res.dStr = String(processed.exponent);
+
         
-        console.log('SQRT func: ',newMantissa, newDegree, res.mStr, res.dStr);
+        console.log('SQRT func: ',newMantissa, newDegree, processed.mantissa, processed.exponent, res.mStr, res.dStr);
         //res.dStr = String(prev.degree / 2);
     }
 }
+
+
