@@ -65,37 +65,12 @@ function FunctionHandler({prev, key, res}){
         newMantissa = Math.sqrt(mantissa);
         newDegree = degree / 2;
         console.log('SQRT func: ',newMantissa, newDegree);
-        // while(newMantissa < 100_000_000 && newDegree > 0){
-        //     newDegree -= 1;
-        //     newMantissa *= 10;
-        // }
-        // while(String(newMantissa).startsWith('0')  && newDegree < 0){ 
-        //     newDegree += 1;
-        //     newMantissa /= 10;
-        // }
-        // while(String(newMantissa).length < 9){
-        //     newDegree += 1;
-        //     newMantissa /= 10;
-        // }
-        // if(String(newMantissa).length > 9){
-        //     while(newMantissa > 10){
-        //         newDegree += 1;
-        //     newMantissa /= 10;
-        //     }
-        // }
-        // res.dStr = String(newDegree);
-        // newMantissa = String(newMantissa.toFixed(7));
-        // res.mStr = (newMantissa.includes('.')? newMantissa.slice(0,9):newMantissa.slice(0,8));
-
-        const processed = NormalizeRegister(newMantissa, newDegree);
-
-        res.mStr = String(processed.mantissa);
-        res.dStr = String(processed.exponent);
-
-        
-        console.log('SQRT func: ',newMantissa, newDegree, processed.mantissa, processed.exponent, res.mStr, res.dStr);
-        //res.dStr = String(prev.degree / 2);
     }
+
+    const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
+
+    res.mStr = String(processed.mantissa);
+    res.dStr = String(processed.degree);
 }
 
 
