@@ -42,7 +42,7 @@ function App() {
 
   useEffect(() => {
     if(PowerState === true){
-      setSymbolStr(DisplayString(DisplayRegister));
+      setSymbolStr(DisplayString(DisplayRegister, SelfState));
     }else{
       setSymbolStr('');
     }

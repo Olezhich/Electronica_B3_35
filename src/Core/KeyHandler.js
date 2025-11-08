@@ -2,9 +2,19 @@ import { IsOverflow, ResetRegister, NormalizeRegister} from "./Register.js";
 
 export function KeyHandler({prev, key, SelfState}){
     let res = {...prev};
+    let error = false;
+
+    if(SelfState.OverFlow){
+        if(key === 'C'){
+            return({register: ResetRegister(), state: {...SelfState, FunctionalMode: false, OverFlow: false}});
+        }else{
+            return({register: res, state: SelfState});
+        }
+    }
+
     if('0123456789'.includes(key)){
         if(SelfState.FunctionalMode)
-            FunctionHandler({prev, key, res});
+            error = error | FunctionHandler({prev, key, res});
         else
             NumberHandler({prev, key, res});
     }else if(key === '/-/'){
@@ -31,7 +41,10 @@ export function KeyHandler({prev, key, SelfState}){
     res.degree = res.dStr === '' ? 0 : Number(res.dStr);
     res.mOverflow = IsOverflow(res.mantissa);
     console.log('KeyHandler: ',res.mStr, res.dStr);
-    const state = {...SelfState, FunctionalMode: false};
+    let state = {...SelfState, FunctionalMode: false};
+    if(error){
+        state.OverFlow = true;
+    }
     return({register: res, state});
 }
 
@@ -58,6 +71,9 @@ function FunctionHandler({prev, key, res}){
     let degree = prev.degree;
     let mantissa = prev.mantissa;
     if(key === '6'){ //sqrt
+        if(prev.mantissa < 0){
+            return true;
+        }
         if(prev.degree%2 === 1){
             degree -= 1;
             mantissa *= 10;
