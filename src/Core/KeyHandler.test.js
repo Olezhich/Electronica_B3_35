@@ -1,7 +1,9 @@
 import { KeyHandler } from "./KeyHandler.js";
 import { ResetRegister } from "./Register.js";
+import { ResetSelfState } from "./SelfState.js";
 
 test.each([
+    //___INPUT NUMBERS___
     {inputSequence: ['.', '6', '7', '1', '5', '4'], expected: {...ResetRegister(), mantissa: 0.67154}, 
         comment: "Example 1: Enter number 0.67154"},
     {inputSequence: ['6', '.', '2', '8', '3', '1', '/-/'], expected: {...ResetRegister(), mantissa: -6.2831}, 
@@ -12,10 +14,18 @@ test.each([
         comment: "Example 3: Enter number -0." + '0'.repeat(10)+'138 = -1.38 * 10 ^ -10'},
     {inputSequence: ['2', 'vp', '2', '3', '/-/', '3', '2', '/-/'], expected: {...ResetRegister(), mantissa: 2, degree: 32}, 
         comment: "Example 3: Enter number -0." + '0'.repeat(10)+'138 = -1.38 * 10 ^ -10'},
+    //___MATH FUNCTIONS TESTS___
+    //sqrt
+    {inputSequence: ['7', '9', '.', '8', 'vp', '2', '6', '/-/', 'F', '6'], expected: {...ResetRegister(), mantissa: 8.9330845, degree: -13}, 
+        comment: "Example 1: sqrt(79.8^{-26})"},
+
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();
+    let SelfState = ResetSelfState();
     for(key of inputSequence){
-        prev = KeyHandler({prev, key}) ?? prev;
+        res = KeyHandler({prev, key, SelfState});
+        prev = res.register ?? prev;
+        SelfState = res.state ?? state;
     };
     expect(prev.mantissa).toEqual(expected.mantissa);
     expect(prev.degree).toEqual(expected.degree);
