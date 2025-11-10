@@ -1,4 +1,4 @@
-import { IsOverflow, NormalizeRegister, ExtractSignificantDigits } from "./Register.js";
+import { IsOverflow, NormalizeRegister, ExtractSignificantDigits, CalculateMeanZeros } from "./Register.js";
 
 test.each([
     {input: 20.23456, expected: false},
@@ -21,6 +21,16 @@ test.each([
 ])('ExtractSignificantDigits($input) - test: $expected', ({input, expected}) => {
     expect(ExtractSignificantDigits(input)).toEqual(expected);
 });
+
+test.each([
+    {input: 0.005, expected: 3},
+    {input: 0.0000005, expected: 7},
+    {input: -0.0000005, expected: 7},
+    {input: 500, expected: 2},
+    {input: 500.000, expected: 2},
+])('CalculateMeanZeros($input) - test: $expected', ({input, expected}) => {
+    expect(CalculateMeanZeros(input)).toEqual(expected);
+})
 
 test.each([
     {input: {mantissa: 123456, degree: -6}, expected: {mantissa: 0.123456, degree: 0}},

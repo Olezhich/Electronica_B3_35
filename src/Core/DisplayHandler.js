@@ -1,4 +1,7 @@
-export function DisplayString(DisplayRegister){
+export function DisplayString(DisplayRegister, SelfState){
+    if(SelfState.OverFlow){
+        return('.0'.repeat(8) + '..0.0.');
+    }
     let displayStr = ((DisplayRegister.mantissa < 0) ? '' : ' ') + 
         preciseFloatToString(DisplayRegister.mantissa) + 
         (preciseFloatToString(DisplayRegister.mantissa).includes('.') ? '' : '.');
