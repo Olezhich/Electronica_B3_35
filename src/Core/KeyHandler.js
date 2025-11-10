@@ -18,7 +18,9 @@ export function KeyHandler({prev, key, SelfState}){
         else
             NumberHandler({prev, key, res});
     }else if(key === '/-/'){
-        if(prev.inputDegree){
+        if(SelfState.FunctionalMode)
+            error = error | FunctionHandler({prev, key, res});
+        else if(prev.inputDegree){
             if(prev.dStr !== '')
                 res.dStr = prev.dStr.startsWith('-') ? prev.dStr.slice(1) : '-' + prev.dStr;
         }else{
@@ -54,12 +56,8 @@ function NumberHandler({prev, key, res}){
     else if(!prev.inputDegree)
         res.mStr = prev.mStr + key;
     else if(Math.abs(prev.degree) * 10 > 90){
-        // if(key === '0')
-        //     return null;
         res.dStr = (prev.dStr.startsWith('-') ? '-' : '') + key;
     }
-    // else if(prev.dStr === '' && key === '0')
-    //     return null;
     else{
         res.dStr = prev.dStr + key;
     }   
@@ -70,7 +68,8 @@ function FunctionHandler({prev, key, res}){
     let newDegree;
     let degree = prev.degree;
     let mantissa = prev.mantissa;
-    if(key === '6'){ //sqrt
+
+    if(key === '6'){ // sqrt
         if(prev.mantissa < 0){
             return true;
         }
@@ -80,7 +79,13 @@ function FunctionHandler({prev, key, res}){
         }
         newMantissa = Math.sqrt(mantissa);
         newDegree = degree / 2;
-        console.log('SQRT func: ',newMantissa, newDegree);
+    }else if(key == '/-/'){ // 1/x
+        if(prev.mantissa === 0){
+            return true;
+        }
+        newMantissa = 1/prev.mantissa;
+        newDegree = -prev.degree;
+        console.log('1/x', newMantissa, newDegree);
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});

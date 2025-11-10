@@ -45,19 +45,54 @@ export function ExtractSignificantDigits(num) {
     return { digits, shift };
 }
 
+export function CalculateMeanZeros(mantissa) {
+  let mean_zeros = 0;
+
+  if (Math.abs(mantissa) < 1) {
+    const str = mantissa.toFixed(7);
+    let started = false;
+    for (let i of str) {
+      if (i === '-' || i === '.') {
+        continue;
+      }
+      if (i === '0' && !started) {
+        mean_zeros++;
+      } else {
+        started = true;
+      }
+    }
+  } else {
+    const str = String(mantissa);
+    for (let i = str.length - 1; i >= 0; i--) {
+      if (str[i] === '0') {
+        mean_zeros++;
+      } else {
+        break;
+      }
+    }
+  }
+  return mean_zeros;
+}
+
 export function NormalizeRegister({mantissa, degree}) {
 
-    if (mantissa === 0) {
+    if (mantissa == 0) {
         return { mantissa: 0, degree: 0 };
+    }
+
+    if (degree == -0){
+        degree = 0;
     }
 
     const res = ExtractSignificantDigits(mantissa);
     mantissa = res.digits;
     degree += res.shift;
 
+    let mean_zeros = 0;
+
     // console.log(mantissa);
 
-    m_len = String(Math.abs(mantissa)).length
+    const m_len = String(Math.abs(mantissa)).length
     if(degree < 0){
         if(Math.max(m_len, Math.abs(degree) + 1) <= 8){
             //число можно представить без степени
@@ -65,6 +100,7 @@ export function NormalizeRegister({mantissa, degree}) {
                 mantissa /=10;
                 degree++;
             }
+
         }else{
             //число нельзя представить без степени, оно будет представлено как мантисса и порядок
             while(mantissa > 10){
@@ -79,6 +115,7 @@ export function NormalizeRegister({mantissa, degree}) {
                 mantissa *= 10;
                 degree--;
             }
+            mean_zeros = true;
         }else{
             //число нельзя представить без степени, оно будет представлено как мантисса и порядок
             while(mantissa > 10){
@@ -87,8 +124,10 @@ export function NormalizeRegister({mantissa, degree}) {
             }
         }
     }
-    const round_val = 10 ** m_len;
+
+    const round_val = 10 ** (m_len + CalculateMeanZeros(mantissa));
     mantissa = Math.round(mantissa * round_val) / round_val;
-    
+    console.log('NR', m_len, round_val, mantissa, degree);
     return { mantissa: mantissa, degree: degree};
 }
+
