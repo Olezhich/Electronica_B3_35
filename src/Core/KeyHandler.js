@@ -1,4 +1,4 @@
-import { IsOverflow, ResetRegister, NormalizeRegister} from "./Register.js";
+import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow} from "./Register.js";
 
 export function KeyHandler({prev, key, SelfState}){
     let res = {...prev};
@@ -42,9 +42,9 @@ export function KeyHandler({prev, key, SelfState}){
     res.dStr = (res.dStr === '0' || res.dStr === '-0' ? '' : res.dStr);
     res.degree = res.dStr === '' ? 0 : Number(res.dStr);
     res.mOverflow = IsOverflow(res.mantissa);
-    console.log('KeyHandler: ',res.mStr, res.dStr);
+    //console.log('KeyHandler: ',res.mStr, res.dStr);
     let state = {...SelfState, FunctionalMode: false};
-    if(error){
+    if(error || CheckOverflow(res)){
         state.OverFlow = true;
     }
     return({register: res, state});
@@ -86,6 +86,9 @@ function FunctionHandler({prev, key, res}){
         newMantissa = 1/prev.mantissa;
         newDegree = -prev.degree;
         console.log('1/x', newMantissa, newDegree);
+    }else if(key == '8'){ // 10^x
+        newMantissa = 10;
+        newDegree = prev.mantissa;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});

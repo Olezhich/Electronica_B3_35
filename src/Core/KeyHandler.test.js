@@ -18,6 +18,9 @@ test.each([
     //sqrt
     {inputSequence: ['7', '9', '.', '8', 'vp', '2', '6', '/-/', 'F', '6'], expected: {...ResetRegister(), mantissa: 8.9330845, degree: -13}, 
         comment: "Example 1: sqrt(79.8^{-26})"},
+    //10^x
+    {inputSequence: ['8', '5', '.', '4', '/-/', 'F', '8'], expected: {...ResetRegister(), mantissa: 10, degree: -85.4}, 
+        comment: "Example 1: 10^{-85.4})"},
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();
