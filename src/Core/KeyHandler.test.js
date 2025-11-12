@@ -21,6 +21,9 @@ test.each([
     //10^x
     {inputSequence: ['8', '5', '.', '4', '/-/', 'F', '8'], expected: {...ResetRegister(), mantissa: 10, degree: -85.4}, 
         comment: "Example 1: 10^{-85.4})"},
+    // e^x
+    {inputSequence: ['1', '9', '3', '.', '7', 'F', '7'], expected: {...ResetRegister(), mantissa: 1.326909, degree: 84}, 
+        comment: "Example 1: e^{193.7})"},
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();

@@ -89,6 +89,16 @@ function FunctionHandler({prev, key, res}){
     }else if(key == '8'){ // 10^x
         newMantissa = 10;
         newDegree = prev.mantissa;
+    }else if(key == '7'){ // e^x
+        const maxExpValue = 230.258509; // ln(10^100)
+
+        const xVal = prev.mantissa * Math.pow(10, prev.degree);
+        
+        if(Math.abs(xVal) > maxExpValue){
+            return true;
+        }
+        newMantissa = Math.exp(xVal);
+        newDegree = 0;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
