@@ -18,6 +18,18 @@ test.each([
     //sqrt
     {inputSequence: ['7', '9', '.', '8', 'vp', '2', '6', '/-/', 'F', '6'], expected: {...ResetRegister(), mantissa: 8.9330845, degree: -13}, 
         comment: "Example 1: sqrt(79.8^{-26})"},
+    //10^x
+    {inputSequence: ['8', '5', '.', '4', '/-/', 'F', '8'], expected: {...ResetRegister(), mantissa: 10, degree: -85.4}, 
+        comment: "Example 1: 10^{-85.4})"},
+    // e^x
+    {inputSequence: ['1', '9', '3', '.', '7', 'F', '7'], expected: {...ResetRegister(), mantissa: 1.326909, degree: 84}, 
+        comment: "Example 1: e^{193.7})"},
+    // ln(x)
+    {inputSequence: ['1', '.', '3', '2', '6', '9', '1', 'vp', '8', '4', 'F', '4'], expected: {...ResetRegister(), mantissa: 193.7, degree: 0}, 
+        comment: "Example 1: ln(1.32691)"},
+    // lg(x)
+    {inputSequence: ['3', '.', '9', '8', '1', '0', '7', 'vp', '8', '6', '/-/', 'F', '5'], expected: {...ResetRegister(), mantissa: -85.4, degree: 0}, 
+        comment: "Example 1: lg(3.98107^{-86})"},
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();

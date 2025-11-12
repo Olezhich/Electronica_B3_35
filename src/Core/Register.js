@@ -131,3 +131,23 @@ export function NormalizeRegister({mantissa, degree}) {
     return { mantissa: mantissa, degree: degree};
 }
 
+export function CheckOverflow({mantissa, degree}) {
+    let m = mantissa;
+    let d = degree;
+
+    if (m === 0) {
+        return false; // 0 не переполняется
+    }
+
+    // Нормализуем мантиссу к [1, 10) или (-10, -1]
+    while (Math.abs(m) >= 10) {
+        m /= 10;
+        d += 1;
+    }
+    while (Math.abs(m) > 0 && Math.abs(m) < 1) {
+        m *= 10;
+        d -= 1;
+    }
+
+    return Math.abs(d) > 99;
+}
