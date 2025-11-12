@@ -93,11 +93,17 @@ function FunctionHandler({prev, key, res}){
         const maxExpValue = 230.258509; // ln(10^100)
 
         const xVal = prev.mantissa * Math.pow(10, prev.degree);
-        
+
         if(Math.abs(xVal) > maxExpValue){
             return true;
         }
         newMantissa = Math.exp(xVal);
+        newDegree = 0;
+    }else if(key == '4'){ // ln(x)
+        if(prev.mantissa < 0){
+            return true;
+        }
+        newMantissa = Math.log(prev.mantissa) + prev.degree * Math.LN10;
         newDegree = 0;
     }
 

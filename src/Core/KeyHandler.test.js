@@ -24,6 +24,9 @@ test.each([
     // e^x
     {inputSequence: ['1', '9', '3', '.', '7', 'F', '7'], expected: {...ResetRegister(), mantissa: 1.326909, degree: 84}, 
         comment: "Example 1: e^{193.7})"},
+    // ln(x)
+    {inputSequence: ['1', '.', '3', '2', '6', '9', '1', 'vp', '8', '4', 'F', '4'], expected: {...ResetRegister(), mantissa: 193.7, degree: 0}, 
+        comment: "Example 1: ln(1.32691)"},
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();
