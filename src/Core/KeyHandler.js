@@ -100,10 +100,16 @@ function FunctionHandler({prev, key, res}){
         newMantissa = Math.exp(xVal);
         newDegree = 0;
     }else if(key == '4'){ // ln(x)
-        if(prev.mantissa < 0){
+        if(prev.mantissa <= 0){
             return true;
         }
         newMantissa = Math.log(prev.mantissa) + prev.degree * Math.LN10;
+        newDegree = 0;
+    }else if(key == '5'){ // lg(x)
+        if(prev.mantissa <= 0){
+            return true;
+        }
+        newMantissa = Math.log10(prev.mantissa) + prev.degree;
         newDegree = 0;
     }
 

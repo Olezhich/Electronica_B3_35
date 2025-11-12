@@ -27,6 +27,9 @@ test.each([
     // ln(x)
     {inputSequence: ['1', '.', '3', '2', '6', '9', '1', 'vp', '8', '4', 'F', '4'], expected: {...ResetRegister(), mantissa: 193.7, degree: 0}, 
         comment: "Example 1: ln(1.32691)"},
+    // lg(x)
+    {inputSequence: ['3', '.', '9', '8', '1', '0', '7', 'vp', '8', '6', '/-/', 'F', '5'], expected: {...ResetRegister(), mantissa: -85.4, degree: 0}, 
+        comment: "Example 1: lg(3.98107^{-86})"},
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();
