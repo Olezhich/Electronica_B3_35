@@ -1,9 +1,10 @@
-import { DegreesToRadians, RadiansToDegrees } from "./MathFunctions";
+import { CosHandler, DegreesToRadians, RadiansToDegrees, SinHandler } from "./MathFunctions";
 import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow} from "./Register.js";
 
 export function KeyHandler({prev, key, SelfState}){
     let res = {...prev};
     let error = false;
+    let rad = SelfState.RadianMode;
 
     if(SelfState.OverFlow){
         if(key === 'C'){
@@ -15,12 +16,12 @@ export function KeyHandler({prev, key, SelfState}){
 
     if('0123456789'.includes(key)){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev, key, res});
+            error = error | FunctionHandler({prev, key, res, rad});
         else
             NumberHandler({prev, key, res});
     }else if(key === '/-/'){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev, key, res});
+            error = error | FunctionHandler({prev, key, res, rad});
         else if(prev.inputDegree){
             if(prev.dStr !== '')
                 res.dStr = prev.dStr.startsWith('-') ? prev.dStr.slice(1) : '-' + prev.dStr;
@@ -30,7 +31,7 @@ export function KeyHandler({prev, key, SelfState}){
         }
     }else if(key === '.'){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev, key, res});
+            error = error | FunctionHandler({prev, key, res, rad});
         else{
             res.mStr = prev.mStr.includes('.') ? prev.mStr : prev.mStr + '.';
         }
@@ -68,7 +69,7 @@ function NumberHandler({prev, key, res}){
     }   
 }
 
-function FunctionHandler({prev, key, res}){
+function FunctionHandler({prev, key, res, rad}){
     let newMantissa;
     let newDegree;
     let degree = prev.degree;
@@ -116,12 +117,26 @@ function FunctionHandler({prev, key, res}){
         }
         newMantissa = Math.log10(prev.mantissa) + prev.degree;
         newDegree = 0;
-    }else if(key == '0'){
+    }else if(key == '0'){ //rad -> deg
         let foo = RadiansToDegrees(prev);
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
-    }else if(key == '.'){
+    }else if(key == '.'){ //deg -> rad
         let foo = DegreesToRadians(prev);
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '1'){ //sin
+        let foo = SinHandler({prev, rad});
+        if(foo === NaN){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '2'){ //cos
+        let foo = CosHandler({prev, rad});
+        if(foo === NaN){
+            return true;
+        }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }

@@ -33,6 +33,12 @@ test.each([
     // degrees to radians
     {inputSequence: ['1', '2', 'F', '.'], expected: {...ResetRegister(), mantissa: 2.0943951, degree: -1}, 
         comment: "Example 1: 12 deg to rad"},
+    // sin(x)
+    {inputSequence: ['3', '0', 'F', '1'], expected: {...ResetRegister(), mantissa: 0.5, degree: 0}, 
+        comment: "Example 1: sin(30)"},
+    // cos(x)
+    {inputSequence: ['1', '2', '0', 'F', '2'], expected: {...ResetRegister(), mantissa: -0.5, degree: 0}, 
+        comment: "Example 1: sin(30)"},
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();
