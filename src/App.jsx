@@ -28,6 +28,13 @@ function App() {
     },
   };
 
+  const DegRadSwitch = {
+    State: SelfState.RadianMode,
+    Handler: () => {
+      setSelfState(prev => ({...prev, RadianMode: !prev.RadianMode}));
+    }
+  }
+
   const ButtonHandler = (key) =>{
     let currentState;
     setDisplayRegister(prev => {
@@ -53,7 +60,7 @@ function App() {
     <main>
       <div className="body" style={{backgroundImage: `url(${body})`}}>
         <Display Str={SymbolStr} />
-        <Controls PowerSwitch={PowerSwitch} ButtonHandler={ButtonHandler}/>
+        <Controls SW={{PowerSwitch, DegRadSwitch}} ButtonHandler={ButtonHandler}/>
       </div>
       
       <div className="buttons">
