@@ -1,3 +1,4 @@
+import { DegreesToRadians, RadiansToDegrees } from "./MathFunctions";
 import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow} from "./Register.js";
 
 export function KeyHandler({prev, key, SelfState}){
@@ -28,7 +29,11 @@ export function KeyHandler({prev, key, SelfState}){
                 res.mStr = prev.mStr.startsWith('-') ? prev.mStr.slice(1) : '-' + prev.mStr;
         }
     }else if(key === '.'){
-        res.mStr = prev.mStr.includes('.') ? prev.mStr : prev.mStr + '.';
+        if(SelfState.FunctionalMode)
+            error = error | FunctionHandler({prev, key, res});
+        else{
+            res.mStr = prev.mStr.includes('.') ? prev.mStr : prev.mStr + '.';
+        }
     }else if(key === 'vp'){
         res.inputDegree = true;
     }else if(key === 'C'){
@@ -111,6 +116,14 @@ function FunctionHandler({prev, key, res}){
         }
         newMantissa = Math.log10(prev.mantissa) + prev.degree;
         newDegree = 0;
+    }else if(key == '0'){
+        let foo = RadiansToDegrees(prev);
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '.'){
+        let foo = DegreesToRadians(prev);
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});

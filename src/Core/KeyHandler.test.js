@@ -30,6 +30,9 @@ test.each([
     // lg(x)
     {inputSequence: ['3', '.', '9', '8', '1', '0', '7', 'vp', '8', '6', '/-/', 'F', '5'], expected: {...ResetRegister(), mantissa: -85.4, degree: 0}, 
         comment: "Example 1: lg(3.98107^{-86})"},
+    // degrees to radians
+    {inputSequence: ['1', '2', 'F', '.'], expected: {...ResetRegister(), mantissa: 2.0943951, degree: -1}, 
+        comment: "Example 1: 12 deg to rad"},
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();
