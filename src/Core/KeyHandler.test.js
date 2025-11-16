@@ -39,6 +39,13 @@ test.each([
     // cos(x)
     {inputSequence: ['1', '2', '0', 'F', '2'], expected: {...ResetRegister(), mantissa: -0.5, degree: 0}, 
         comment: "Example 1: sin(30)"},
+    // tan(x)
+    {inputSequence: ['3', '1', '5', 'F', '3'], expected: {...ResetRegister(), mantissa: -1, degree: 0}, 
+        comment: "Example 1: tan(315)"},
+    // n!
+    {inputSequence: ['2', '3', 'F', 'pi'], expected: {...ResetRegister(), mantissa: 2.5852016, degree: 22}, 
+        comment: "Example 1: 23!"},
+
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();

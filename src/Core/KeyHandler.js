@@ -1,4 +1,4 @@
-import { CosHandler, DegreesToRadians, RadiansToDegrees, SinHandler } from "./MathFunctions";
+import { CosHandler, DegreesToRadians, FactorialHandler, RadiansToDegrees, SinHandler, TanHandler } from "./MathFunctions";
 import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow} from "./Register.js";
 
 export function KeyHandler({prev, key, SelfState}){
@@ -40,7 +40,11 @@ export function KeyHandler({prev, key, SelfState}){
     }else if(key === 'C'){
         return({register: ResetRegister(), state: {...SelfState, FunctionalMode: false}});
     }else if(key === 'pi'){
-        res = {...ResetRegister(), mStr: '3.1415926'};
+        if(SelfState.FunctionalMode)
+            error = error | FunctionHandler({prev, key, res, rad});
+        else{
+            res = {...ResetRegister(), mStr: '3.1415926'};
+        }
     }else if(key === 'F'){
         return ({register: null, state: {...SelfState, FunctionalMode: true}});;
     }
@@ -91,7 +95,6 @@ function FunctionHandler({prev, key, res, rad}){
         }
         newMantissa = 1/prev.mantissa;
         newDegree = -prev.degree;
-        console.log('1/x', newMantissa, newDegree);
     }else if(key == '8'){ // 10^x
         newMantissa = 10;
         newDegree = prev.mantissa;
@@ -134,6 +137,20 @@ function FunctionHandler({prev, key, res, rad}){
         newDegree = foo.degree;
     }else if(key == '2'){ //cos
         let foo = CosHandler({prev, rad});
+        if(foo === NaN){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '3'){ //tan
+        let foo = TanHandler({prev, rad});
+        if(foo === NaN){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == 'pi'){ //n!
+        let foo = FactorialHandler(prev);
         if(foo === NaN){
             return true;
         }
