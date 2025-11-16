@@ -1,5 +1,5 @@
 import { CosHandler, DegreesToRadians, FactorialHandler, RadiansToDegrees, SinHandler, TanHandler } from "./MathFunctions";
-import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow} from "./Register.js";
+import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow} from "./Register";
 
 export function KeyHandler({prev, key, SelfState}){
     let res = {...prev};

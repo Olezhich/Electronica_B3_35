@@ -1,5 +1,5 @@
 import { DisplayString } from "./DisplayHandler.js";
-import { ResetRegister } from "./Register.js"
+import { ResetRegister } from "./Register"
 import { ResetSelfState } from "./SelfState.js";
 
 test('Register to Display String', () => {

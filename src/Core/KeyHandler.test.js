@@ -1,5 +1,5 @@
 import { KeyHandler } from "./KeyHandler.js";
-import { ResetRegister } from "./Register.js";
+import { ResetRegister } from "./Register";
 import { ResetSelfState } from "./SelfState.js";
 
 test.each([
