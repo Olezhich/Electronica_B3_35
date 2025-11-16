@@ -1,8 +1,10 @@
-import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow} from "./Register.js";
+import { CosHandler, DegreesToRadians, FactorialHandler, RadiansToDegrees, SinHandler, TanHandler } from "./MathFunctions";
+import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow} from "./Register";
 
 export function KeyHandler({prev, key, SelfState}){
     let res = {...prev};
     let error = false;
+    let rad = SelfState.RadianMode;
 
     if(SelfState.OverFlow){
         if(key === 'C'){
@@ -14,12 +16,12 @@ export function KeyHandler({prev, key, SelfState}){
 
     if('0123456789'.includes(key)){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev, key, res});
+            error = error | FunctionHandler({prev, key, res, rad});
         else
             NumberHandler({prev, key, res});
     }else if(key === '/-/'){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev, key, res});
+            error = error | FunctionHandler({prev, key, res, rad});
         else if(prev.inputDegree){
             if(prev.dStr !== '')
                 res.dStr = prev.dStr.startsWith('-') ? prev.dStr.slice(1) : '-' + prev.dStr;
@@ -28,13 +30,21 @@ export function KeyHandler({prev, key, SelfState}){
                 res.mStr = prev.mStr.startsWith('-') ? prev.mStr.slice(1) : '-' + prev.mStr;
         }
     }else if(key === '.'){
-        res.mStr = prev.mStr.includes('.') ? prev.mStr : prev.mStr + '.';
+        if(SelfState.FunctionalMode)
+            error = error | FunctionHandler({prev, key, res, rad});
+        else{
+            res.mStr = prev.mStr.includes('.') ? prev.mStr : prev.mStr + '.';
+        }
     }else if(key === 'vp'){
         res.inputDegree = true;
     }else if(key === 'C'){
         return({register: ResetRegister(), state: {...SelfState, FunctionalMode: false}});
     }else if(key === 'pi'){
-        res = {...ResetRegister(), mStr: '3.1415926'};
+        if(SelfState.FunctionalMode)
+            error = error | FunctionHandler({prev, key, res, rad});
+        else{
+            res = {...ResetRegister(), mStr: '3.1415926'};
+        }
     }else if(key === 'F'){
         return ({register: null, state: {...SelfState, FunctionalMode: true}});;
     }
@@ -63,7 +73,7 @@ function NumberHandler({prev, key, res}){
     }   
 }
 
-function FunctionHandler({prev, key, res}){
+function FunctionHandler({prev, key, res, rad}){
     let newMantissa;
     let newDegree;
     let degree = prev.degree;
@@ -85,7 +95,6 @@ function FunctionHandler({prev, key, res}){
         }
         newMantissa = 1/prev.mantissa;
         newDegree = -prev.degree;
-        console.log('1/x', newMantissa, newDegree);
     }else if(key == '8'){ // 10^x
         newMantissa = 10;
         newDegree = prev.mantissa;
@@ -111,6 +120,42 @@ function FunctionHandler({prev, key, res}){
         }
         newMantissa = Math.log10(prev.mantissa) + prev.degree;
         newDegree = 0;
+    }else if(key == '0'){ //rad -> deg
+        let foo = RadiansToDegrees(prev);
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '.'){ //deg -> rad
+        let foo = DegreesToRadians(prev);
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '1'){ //sin
+        let foo = SinHandler({prev, rad});
+        if(foo === NaN){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '2'){ //cos
+        let foo = CosHandler({prev, rad});
+        if(foo === NaN){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '3'){ //tan
+        let foo = TanHandler({prev, rad});
+        if(foo === NaN){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == 'pi'){ //n!
+        let foo = FactorialHandler(prev);
+        if(foo === NaN){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});

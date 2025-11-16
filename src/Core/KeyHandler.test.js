@@ -1,5 +1,5 @@
 import { KeyHandler } from "./KeyHandler.js";
-import { ResetRegister } from "./Register.js";
+import { ResetRegister } from "./Register";
 import { ResetSelfState } from "./SelfState.js";
 
 test.each([
@@ -30,6 +30,22 @@ test.each([
     // lg(x)
     {inputSequence: ['3', '.', '9', '8', '1', '0', '7', 'vp', '8', '6', '/-/', 'F', '5'], expected: {...ResetRegister(), mantissa: -85.4, degree: 0}, 
         comment: "Example 1: lg(3.98107^{-86})"},
+    // degrees to radians
+    {inputSequence: ['1', '2', 'F', '.'], expected: {...ResetRegister(), mantissa: 2.0943951, degree: -1}, 
+        comment: "Example 1: 12 deg to rad"},
+    // sin(x)
+    {inputSequence: ['3', '0', 'F', '1'], expected: {...ResetRegister(), mantissa: 0.5, degree: 0}, 
+        comment: "Example 1: sin(30)"},
+    // cos(x)
+    {inputSequence: ['1', '2', '0', 'F', '2'], expected: {...ResetRegister(), mantissa: -0.5, degree: 0}, 
+        comment: "Example 1: sin(30)"},
+    // tan(x)
+    {inputSequence: ['3', '1', '5', 'F', '3'], expected: {...ResetRegister(), mantissa: -1, degree: 0}, 
+        comment: "Example 1: tan(315)"},
+    // n!
+    {inputSequence: ['2', '3', 'F', 'pi'], expected: {...ResetRegister(), mantissa: 2.5852016, degree: 22}, 
+        comment: "Example 1: 23!"},
+
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRegister();
