@@ -43,7 +43,7 @@ function Buttons({ButtonHandler}){
     ];
 
     const key_values = [
-        'C','/-/','','vp','F',
+        'C','/-/','arc','vp','F',
         '7', '8', '9', '','',
         '4', '5', '6','','',
         '1', '2', '3','','',
