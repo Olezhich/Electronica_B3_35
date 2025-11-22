@@ -134,32 +134,34 @@ function FunctionHandler({prev, key, res, rad}){
         newDegree = foo.degree;
     }else if(key == '1'){ //sin
         let foo = SinHandler({prev, rad});
-        if(foo === NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == '2'){ //cos
         let foo = CosHandler({prev, rad});
-        if(foo === NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == '3'){ //tan
         let foo = TanHandler({prev, rad});
-        if(foo === NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == 'pi'){ //n!
         let foo = FactorialHandler(prev);
-        if(foo === NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
+    }else{
+        return false;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
@@ -174,25 +176,27 @@ function ArcHandler({prev, key, res, rad}){
 
     if(key == '1'){ //arcsin
         let foo = ArcSinHandler({prev,rad});
-        if(foo == NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == '2'){ //arccos
         let foo = ArcCosHandler({prev,rad});
-        if(foo == NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == '3'){ //arctan
         let foo = ArcTanHandler({prev,rad});
-        if(foo == NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
+    }else{
+        return false;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});

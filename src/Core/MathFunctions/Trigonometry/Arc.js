@@ -1,6 +1,6 @@
 export function ArcSinHandler({prev: {mantissa, degree}, rad}){
     let val = mantissa * Math.pow(10, degree);
-    if(!(Math.abs(val) < 1 && Math.abs(val) > 1e-9 || val === 0)){
+    if(!(Math.abs(val) <= 1 && Math.abs(val) > 1e-9 || val === 0)){
         return NaN;
     }
 
@@ -15,7 +15,7 @@ export function ArcSinHandler({prev: {mantissa, degree}, rad}){
 
 export function ArcCosHandler({prev: {mantissa, degree}, rad}){
     let val = mantissa * Math.pow(10, degree);
-    if(!(Math.abs(val) < 1 && Math.abs(val) > 1e-9 || val === 0)){
+    if(!(Math.abs(val) <= 1 && Math.abs(val) > 1e-9 || val === 0)){
         return NaN;
     }
 

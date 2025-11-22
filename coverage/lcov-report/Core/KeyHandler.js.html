@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.41% </span>
+                <span class="strong">79.31% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>115/143</span>
+                <span class='fraction'>115/145</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.41% </span>
+                <span class="strong">79.31% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>115/143</span>
+                <span class='fraction'>115/145</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -267,7 +267,11 @@
 <a name='L202'></a><a href='#L202'>202</a>
 <a name='L203'></a><a href='#L203'>203</a>
 <a name='L204'></a><a href='#L204'>204</a>
-<a name='L205'></a><a href='#L205'>205</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -430,6 +434,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -462,6 +468,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
@@ -607,32 +615,34 @@ function FunctionHandler({prev, key, res, rad}){
         newDegree = foo.degree;
     }else if(key == '1'){ //sin
         let foo = SinHandler({prev, rad});
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(foo === NaN){
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(Number.isNaN(foo)){
 <span class="cstat-no" title="statement not covered" >            return true;</span>
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == '2'){ //cos
         let foo = CosHandler({prev, rad});
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(foo === NaN){
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(Number.isNaN(foo)){
 <span class="cstat-no" title="statement not covered" >            return true;</span>
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == '3'){ //tan
         let foo = TanHandler({prev, rad});
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(foo === NaN){
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(Number.isNaN(foo)){
 <span class="cstat-no" title="statement not covered" >            return true;</span>
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
-    }else <span class="missing-if-branch" title="else path not taken" >E</span>if(key == 'pi'){ //n!
+    }else if(key == 'pi'){ //n!
         let foo = FactorialHandler(prev);
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(foo === NaN){
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(Number.isNaN(foo)){
 <span class="cstat-no" title="statement not covered" >            return true;</span>
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
+    }else<span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >        return false;</span>
     }
 &nbsp;
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
@@ -647,25 +657,27 @@ function ArcHandler({prev, key, res, rad}){
 &nbsp;
     if(key == '1'){ //arcsin
         let foo = ArcSinHandler({prev,rad});
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(foo == NaN){
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(Number.isNaN(foo)){
 <span class="cstat-no" title="statement not covered" >            return true;</span>
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == '2'){ //arccos
         let foo = ArcCosHandler({prev,rad});
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(foo == NaN){
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(Number.isNaN(foo)){
 <span class="cstat-no" title="statement not covered" >            return true;</span>
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
-    }else <span class="missing-if-branch" title="else path not taken" >E</span>if(key == '3'){ //arctan
+    }else if(key == '3'){ //arctan
         let foo = ArcTanHandler({prev,rad});
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(foo == NaN){
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(Number.isNaN(foo)){
 <span class="cstat-no" title="statement not covered" >            return true;</span>
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
+    }else<span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >        return false;</span>
     }
 &nbsp;
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
@@ -682,7 +694,7 @@ function ArcHandler({prev, key, res, rad}){
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-22T17:54:33.699Z
+                at 2025-11-22T18:12:27.069Z
             </div>
         <script src="../prettify.js"></script>
         <script>
