@@ -10,3 +10,14 @@ export function ResetRegister() {
         }
     );
 }
+
+export function ResetRS(){
+    return (
+        {
+            X: ResetRegister(),
+            Y: ResetRegister(),
+            A: ResetRegister(),
+            B: ResetRegister(),
+        }
+    )
+}
