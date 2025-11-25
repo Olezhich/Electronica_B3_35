@@ -18,13 +18,20 @@ export function KeyHandler({prev, key, SelfState}){
     let X_prev = prev.X;
     let X_res = res.X;
 
+    let new_num_flag = SelfState.NewNumMode;
+
     if('0123456789'.includes(key)){
         if(SelfState.FunctionalMode)
             error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
         else if(SelfState.ArcMode)
             error = error | ArcHandler({prev: X_prev, key, res: X_res, rad});
-        else
+        else{
+            if(new_num_flag){
+                X_prev = ResetRegister();
+            }
             NumberHandler({prev: X_prev, key, res: X_res});
+            new_num_flag = false;
+        }
     }else if(key === '/-/'){
         if(SelfState.FunctionalMode)
             error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
@@ -55,7 +62,22 @@ export function KeyHandler({prev, key, SelfState}){
         return ({register: null, state: {...SelfState, FunctionalMode: true}});
     }else if(key === 'arc'){
         return ({register: null, state: {...SelfState, ArcMode: true}});
+    }else if('+-*/'.includes(key)){
+        res.X.operation = key;
+        bin_operation_flag = true;
+        res.Y = {...res.X};
+        new_num_flag = true;
+    }else if(key === '='){
+        let tmp = EvalHandler(prev);
+        if(tmp){
+            res = tmp;
+            new_num_flag = true;
+        }else{
+            error = true;
+        }
     }
+
+
     res.X.mantissa = X_res.mStr === '' ? 0 : Number(X_res.mStr);
     res.X.dStr = (X_res.dStr === '0' || X_res.dStr === '-0' ? '' : X_res.dStr);
     res.X.degree = X_res.dStr === '' ? 0 : Number(X_res.dStr);
@@ -64,7 +86,7 @@ export function KeyHandler({prev, key, SelfState}){
     if(!bin_operation_flag)
         res.X.operation = null;
     //console.log('KeyHandler: ',res.mStr, res.dStr);
-    let state = {...SelfState, FunctionalMode: false, ArcMode: false};
+    let state = {...SelfState, FunctionalMode: false, ArcMode: false, NewNumMode: new_num_flag};
     if(error || CheckOverflow(res)){
         state.OverFlow = true;
     }
@@ -210,6 +232,31 @@ function ArcHandler({prev, key, res, rad}){
 
     res.mStr = String(processed.mantissa);
     res.dStr = String(processed.degree);
+}
+
+function EvalHandler(prev){
+    const CurrentOper = prev.Y.operation;
+    
+    const wr = prev.Y.mantissa * Math.pow(10, prev.Y.degree);
+    const dr = prev.X.mantissa * Math.pow(10, prev.X.degree);
+
+    let newMantissa = 0;
+
+    if(CurrentOper === '-'){
+        newMantissa = wr - dr;
+    }else if(CurrentOper === '+'){
+        newMantissa = wr + dr;
+    }else if(CurrentOper === '*'){
+        newMantissa = wr * dr;
+    }else if(CurrentOper === '/' && dr != 0){
+        newMantissa = wr / dr;
+    }else{
+        return null;
+    }
+
+    const processed = NormalizeRegister({mantissa: newMantissa, degree: 0});
+
+    return( {...prev, X: {...ResetRegister(), mStr: String(processed.mantissa), dStr: String(processed.degree)}, Y: {...prev.X, operation: prev.Y.operation}});
 }
 
 

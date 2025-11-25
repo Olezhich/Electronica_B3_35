@@ -4,5 +4,6 @@ export function ResetSelfState(){
         ArcMode: false,
         OverFlow: false,
         RadianMode: false,
+        NewNumMode: false,
     });
 }
