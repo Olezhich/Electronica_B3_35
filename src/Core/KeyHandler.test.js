@@ -1,5 +1,5 @@
 import { KeyHandler } from "./KeyHandler.js";
-import { ResetRegister } from "./Register";
+import { ResetRegister, ResetRS } from "./Register";
 import { ResetSelfState } from "./SelfState.js";
 
 test.each([
@@ -56,13 +56,13 @@ test.each([
         comment: "Example 1: arcsin(30)"},
 
 ])("$comment", ({inputSequence, expected}) => {
-    let prev = ResetRegister();
+    let prev = ResetRS();
     let SelfState = ResetSelfState();
-    for(key of inputSequence){
+    for(const key of inputSequence){
         res = KeyHandler({prev, key, SelfState});
         prev = res.register ?? prev;
-        SelfState = res.state ?? state;
+        SelfState = res.state;
     };
-    expect(prev.mantissa).toEqual(expected.mantissa);
-    expect(prev.degree).toEqual(expected.degree);
+    expect(prev.X.mantissa).toEqual(expected.mantissa);
+    expect(prev.X.degree).toEqual(expected.degree);
 });

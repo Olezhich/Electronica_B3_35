@@ -7,7 +7,7 @@ import { KeyHandler } from './Core/KeyHandler';
 import { DisplayString } from './Core/DisplayHandler'; 
 
 import body from './assets/body.png'
-import { ResetRegister } from './Core/Register';
+import { ResetRegister, ResetRS } from './Core/Register';
 import { ResetSelfState } from './Core/SelfState';
 
 
@@ -15,7 +15,7 @@ function App() {
   const [PowerState, setPowerState] = useState(false);
   const [SymbolStr, setSymbolStr] = useState('');
 
-  const [DisplayRegister, setDisplayRegister] = useState(ResetRegister());
+  const [Registers, setRegisters] = useState(ResetRS());
 
   const [SelfState, setSelfState] = useState(ResetSelfState());
 
@@ -24,7 +24,7 @@ function App() {
     Handler: () => {
       setPowerState(prev => !prev);
       if(!PowerState)
-        setDisplayRegister(ResetRegister());
+        setRegisters(ResetRS());
     },
   };
 
@@ -37,7 +37,7 @@ function App() {
 
   const ButtonHandler = (key) =>{
     let currentState;
-    setDisplayRegister(prev => {
+    setRegisters(prev => {
       const result = KeyHandler({ prev, key, SelfState});
       currentState = result.state;
       return result.register ?? prev;
@@ -49,12 +49,12 @@ function App() {
 
   useEffect(() => {
     if(PowerState === true){
-      setSymbolStr(DisplayString(DisplayRegister, SelfState));
+      setSymbolStr(DisplayString(Registers.X, SelfState));
     }else{
       setSymbolStr('');
     }
-    console.log(DisplayRegister, SelfState);
-  }, [PowerState, DisplayRegister, SelfState]);
+    console.log(Registers.X, SelfState);
+  }, [PowerState, Registers, SelfState]);
 
   return (
     <main>
