@@ -1,14 +1,8 @@
 import { ArcSinHandler, ArcCosHandler, ArcTanHandler, CosHandler, DegreesToRadians, FactorialHandler, RadiansToDegrees, SinHandler, TanHandler } from "./MathFunctions";
-import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow, ResetRS} from "./Register";
+import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow, ResetRS, CloneRS} from "./Register";
 
 export function KeyHandler({prev, key, SelfState}){
-    let res = {
-        ...prev,
-        X: {...prev.X},
-        Y: {...prev.Y},
-        A: {...prev.A},
-        B: {...prev.B},
-    };
+    let res = CloneRS(prev);
     let error = false;
     let rad = SelfState.RadianMode;
     let bin_operation_flag = false;
