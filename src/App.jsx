@@ -7,7 +7,7 @@ import { KeyHandler } from './Core/KeyHandler';
 import { DisplayString } from './Core/DisplayHandler'; 
 
 import body from './assets/body.png'
-import { ResetRegister } from './Core/Register';
+import { ResetRegister, ResetRS } from './Core/Register';
 import { ResetSelfState } from './Core/SelfState';
 
 
@@ -15,7 +15,7 @@ function App() {
   const [PowerState, setPowerState] = useState(false);
   const [SymbolStr, setSymbolStr] = useState('');
 
-  const [DisplayRegister, setDisplayRegister] = useState(ResetRegister());
+  const [Registers, setRegisters] = useState(ResetRS());
 
   const [SelfState, setSelfState] = useState(ResetSelfState());
 
@@ -24,7 +24,7 @@ function App() {
     Handler: () => {
       setPowerState(prev => !prev);
       if(!PowerState)
-        setDisplayRegister(ResetRegister());
+        setRegisters(ResetRS());
     },
   };
 
@@ -37,7 +37,7 @@ function App() {
 
   const ButtonHandler = (key) =>{
     let currentState;
-    setDisplayRegister(prev => {
+    setRegisters(prev => {
       const result = KeyHandler({ prev, key, SelfState});
       currentState = result.state;
       return result.register ?? prev;
@@ -49,12 +49,12 @@ function App() {
 
   useEffect(() => {
     if(PowerState === true){
-      setSymbolStr(DisplayString(DisplayRegister, SelfState));
+      setSymbolStr(DisplayString(Registers.X, SelfState));
     }else{
       setSymbolStr('');
     }
-    console.log(DisplayRegister, SelfState);
-  }, [PowerState, DisplayRegister, SelfState]);
+    console.log(Registers.X, SelfState);
+  }, [PowerState, Registers, SelfState]);
 
   return (
     <main>
@@ -63,13 +63,41 @@ function App() {
         <Controls SW={{PowerSwitch, DegRadSwitch}} ButtonHandler={ButtonHandler}/>
       </div>
       
-      <div className="buttons">
-        <input
-          type="text"
-          value={SymbolStr}
-          onChange={(e) => setSymbolStr(e.target.value)}
-          placeholder=""
-        />
+      <div className='registers'>
+        <table>
+          <colgroup>
+            <col className="register" />
+            <col className="mantissa" />
+            <col className="degree" />
+            <col className="operation" />
+          </colgroup>
+          <tbody>
+            <tr>
+              <th>X</th>
+              <th>{Registers.X.mantissa  ?? 0}</th>
+              <th>{Registers.X.degree ?? 0}</th>
+              <th>{Registers.X.operation}</th>
+            </tr>
+            <tr>
+              <th>Y</th>
+              <th>{Registers.Y.mantissa ?? 0}</th>
+              <th>{Registers.Y.degree ?? 0}</th>
+              <th>{Registers.Y.operation}</th>
+            </tr>
+            <tr>
+              <th>A</th>
+              <th>{Registers.A.mantissa ?? 0}</th>
+              <th>{Registers.A.degree ?? 0}</th>
+              <th>{Registers.A.operation}</th>
+            </tr>
+            <tr>
+              <th>B</th>
+              <th>{Registers.B.mantissa ?? 0}</th>
+              <th>{Registers.B.degree ?? 0}</th>
+              <th>{Registers.B.operation}</th>
+            </tr>
+          </tbody>
+        </table>
       </div>
      
     </main>

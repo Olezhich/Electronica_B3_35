@@ -1,5 +1,5 @@
 import { KeyHandler } from "./KeyHandler.js";
-import { ResetRegister } from "./Register";
+import { ResetRegister, ResetRS } from "./Register";
 import { ResetSelfState } from "./SelfState.js";
 
 test.each([
@@ -45,16 +45,24 @@ test.each([
     // n!
     {inputSequence: ['2', '3', 'F', 'pi'], expected: {...ResetRegister(), mantissa: 2.5852016, degree: 22}, 
         comment: "Example 1: 23!"},
-
+    // arcsin(x)
+    {inputSequence: ['0', '.', '5', 'arc', '1'], expected: {...ResetRegister(), mantissa: 30, degree: 0}, 
+        comment: "Example 1: arcsin(30)"},
+    // arccos(x)
+    {inputSequence: ['0', '.', '5', '/-/', 'arc', '2'], expected: {...ResetRegister(), mantissa: 120, degree: 0}, 
+        comment: "Example 1: arcsin(30)"},
+    // arctan(x)
+    {inputSequence: ['1', '/-/', 'arc', '3'], expected: {...ResetRegister(), mantissa: -45, degree: 0}, 
+        comment: "Example 1: arcsin(30)"},
 
 ])("$comment", ({inputSequence, expected}) => {
-    let prev = ResetRegister();
+    let prev = ResetRS();
     let SelfState = ResetSelfState();
-    for(key of inputSequence){
+    for(const key of inputSequence){
         res = KeyHandler({prev, key, SelfState});
         prev = res.register ?? prev;
-        SelfState = res.state ?? state;
+        SelfState = res.state;
     };
-    expect(prev.mantissa).toEqual(expected.mantissa);
-    expect(prev.degree).toEqual(expected.degree);
+    expect(prev.X.mantissa).toEqual(expected.mantissa);
+    expect(prev.X.degree).toEqual(expected.degree);
 });

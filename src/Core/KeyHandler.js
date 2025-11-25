@@ -1,59 +1,76 @@
-import { CosHandler, DegreesToRadians, FactorialHandler, RadiansToDegrees, SinHandler, TanHandler } from "./MathFunctions";
-import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow} from "./Register";
+import { ArcSinHandler, ArcCosHandler, ArcTanHandler, CosHandler, DegreesToRadians, FactorialHandler, RadiansToDegrees, SinHandler, TanHandler } from "./MathFunctions";
+import { IsOverflow, ResetRegister, NormalizeRegister, CheckOverflow, ResetRS} from "./Register";
 
 export function KeyHandler({prev, key, SelfState}){
-    let res = {...prev};
+    let res = {
+        ...prev,
+        X: {...prev.X},
+        Y: {...prev.Y},
+        A: {...prev.A},
+        B: {...prev.B},
+    };
     let error = false;
     let rad = SelfState.RadianMode;
+    let bin_operation_flag = false;
 
     if(SelfState.OverFlow){
         if(key === 'C'){
-            return({register: ResetRegister(), state: {...SelfState, FunctionalMode: false, OverFlow: false}});
+            return({register: ResetRS(), state: {...SelfState, FunctionalMode: false, ArcMode: false, OverFlow: false}});
         }else{
             return({register: res, state: SelfState});
         }
     }
 
+    let X_prev = prev.X;
+    let X_res = res.X;
+
     if('0123456789'.includes(key)){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev, key, res, rad});
+            error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
+        else if(SelfState.ArcMode)
+            error = error | ArcHandler({prev: X_prev, key, res: X_res, rad});
         else
-            NumberHandler({prev, key, res});
+            NumberHandler({prev: X_prev, key, res: X_res});
     }else if(key === '/-/'){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev, key, res, rad});
-        else if(prev.inputDegree){
-            if(prev.dStr !== '')
-                res.dStr = prev.dStr.startsWith('-') ? prev.dStr.slice(1) : '-' + prev.dStr;
+            error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
+        else if(X_prev.inputDegree){
+            if(X_prev.dStr !== '')
+                X_res.dStr = X_prev.dStr.startsWith('-') ? X_prev.dStr.slice(1) : '-' + X_prev.dStr;
         }else{
-            if(prev.mStr !== '')
-                res.mStr = prev.mStr.startsWith('-') ? prev.mStr.slice(1) : '-' + prev.mStr;
+            if(X_prev.mStr !== '')
+                X_res.mStr = X_prev.mStr.startsWith('-') ? X_prev.mStr.slice(1) : '-' + X_prev.mStr;
         }
     }else if(key === '.'){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev, key, res, rad});
+            error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
         else{
-            res.mStr = prev.mStr.includes('.') ? prev.mStr : prev.mStr + '.';
+            X_res.mStr = X_prev.mStr.includes('.') ? X_prev.mStr : X_prev.mStr + '.';
         }
     }else if(key === 'vp'){
-        res.inputDegree = true;
+        X_res.inputDegree = true;
     }else if(key === 'C'){
-        return({register: ResetRegister(), state: {...SelfState, FunctionalMode: false}});
+        return({register: ResetRS(), state: {...SelfState, FunctionalMode: false, ArcMode: false}});
     }else if(key === 'pi'){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev, key, res, rad});
+            error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
         else{
-            res = {...ResetRegister(), mStr: '3.1415926'};
+            X_res = {...ResetRegister(), mStr: '3.1415926'};
         }
     }else if(key === 'F'){
-        return ({register: null, state: {...SelfState, FunctionalMode: true}});;
+        return ({register: null, state: {...SelfState, FunctionalMode: true}});
+    }else if(key === 'arc'){
+        return ({register: null, state: {...SelfState, ArcMode: true}});
     }
-    res.mantissa = res.mStr === '' ? 0 : Number(res.mStr);
-    res.dStr = (res.dStr === '0' || res.dStr === '-0' ? '' : res.dStr);
-    res.degree = res.dStr === '' ? 0 : Number(res.dStr);
-    res.mOverflow = IsOverflow(res.mantissa);
+    res.X.mantissa = X_res.mStr === '' ? 0 : Number(X_res.mStr);
+    res.X.dStr = (X_res.dStr === '0' || X_res.dStr === '-0' ? '' : X_res.dStr);
+    res.X.degree = X_res.dStr === '' ? 0 : Number(X_res.dStr);
+    res.X.mOverflow = IsOverflow(X_res.mantissa);
+
+    if(!bin_operation_flag)
+        res.X.operation = null;
     //console.log('KeyHandler: ',res.mStr, res.dStr);
-    let state = {...SelfState, FunctionalMode: false};
+    let state = {...SelfState, FunctionalMode: false, ArcMode: false};
     if(error || CheckOverflow(res)){
         state.OverFlow = true;
     }
@@ -130,32 +147,69 @@ function FunctionHandler({prev, key, res, rad}){
         newDegree = foo.degree;
     }else if(key == '1'){ //sin
         let foo = SinHandler({prev, rad});
-        if(foo === NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == '2'){ //cos
         let foo = CosHandler({prev, rad});
-        if(foo === NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == '3'){ //tan
         let foo = TanHandler({prev, rad});
-        if(foo === NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
     }else if(key == 'pi'){ //n!
         let foo = FactorialHandler(prev);
-        if(foo === NaN){
+        if(Number.isNaN(foo)){
             return true;
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
+    }else{
+        return false;
+    }
+
+    const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
+
+    res.mStr = String(processed.mantissa);
+    res.dStr = String(processed.degree);
+}
+
+function ArcHandler({prev, key, res, rad}){
+    let newMantissa;
+    let newDegree;
+
+    if(key == '1'){ //arcsin
+        let foo = ArcSinHandler({prev,rad});
+        if(Number.isNaN(foo)){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '2'){ //arccos
+        let foo = ArcCosHandler({prev,rad});
+        if(Number.isNaN(foo)){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else if(key == '3'){ //arctan
+        let foo = ArcTanHandler({prev,rad});
+        if(Number.isNaN(foo)){
+            return true;
+        }
+        newMantissa = foo.mantissa;
+        newDegree = foo.degree;
+    }else{
+        return false;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});

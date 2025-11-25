@@ -1,9 +1,36 @@
 .body{
     aspect-ratio: 9/16;
-    height: 500px;
+    height: 80vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 
     position: relative;
 }
+
+.registers table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* 🔑 КЛЮЧЕВОЕ: фиксирует ширину колонок по <col> или по первой строке */
+  font-family: monospace; /* опционально: для выравнивания чисел */
+}
+
+.registers th,
+.registers td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: right; /* числа лучше выравнивать по правому краю */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Фиксированная ширина колонок */
+.registers col.register { width: 10%; }
+.registers col.mantissa { width: 30%; }
+.registers col.degree  { width: 30%; }
+.registers col.operation { width: 30%; }
