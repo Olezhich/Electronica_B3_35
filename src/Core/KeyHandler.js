@@ -15,54 +15,59 @@ export function KeyHandler({prev, key, SelfState}){
         }
     }
 
-    let X_prev = prev.X;
-    let X_res = res.X;
-
     let new_num_flag = SelfState.NewNumMode;
 
     if('0123456789'.includes(key)){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
+            error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
         else if(SelfState.ArcMode)
-            error = error | ArcHandler({prev: X_prev, key, res: X_res, rad});
+            error = error | ArcHandler({prev: prev.X, key, res: res.X, rad});
         else{
             if(new_num_flag){
-                X_prev = ResetRegister();
+                prev.X = ResetRegister();
             }
-            NumberHandler({prev: X_prev, key, res: X_res});
+            NumberHandler({prev: prev.X, key, res: res.X});
             new_num_flag = false;
         }
     }else if(key === '/-/'){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
-        else if(X_prev.inputDegree){
-            if(X_prev.dStr !== '')
-                X_res.dStr = X_prev.dStr.startsWith('-') ? X_prev.dStr.slice(1) : '-' + X_prev.dStr;
+            error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
+        else if(prev.X.inputDegree){
+            if(prev.X.dStr !== '')
+                res.X.dStr = prev.X.dStr.startsWith('-') ? prev.X.dStr.slice(1) : '-' + prev.X.dStr;
         }else{
-            if(X_prev.mStr !== '')
-                X_res.mStr = X_prev.mStr.startsWith('-') ? X_prev.mStr.slice(1) : '-' + X_prev.mStr;
+            if(prev.X.mStr !== '')
+                res.X.mStr = prev.X.mStr.startsWith('-') ? prev.X.mStr.slice(1) : '-' + prev.X.mStr;
         }
     }else if(key === '.'){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
+            error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
         else{
-            X_res.mStr = X_prev.mStr.includes('.') ? X_prev.mStr : X_prev.mStr + '.';
+            res.X.mStr = prev.X.mStr.includes('.') ? prev.X.mStr : prev.X.mStr + '.';
         }
     }else if(key === 'vp'){
-        X_res.inputDegree = true;
+        res.X.inputDegree = true;
     }else if(key === 'C'){
         return({register: ResetRS(), state: {...SelfState, FunctionalMode: false, ArcMode: false}});
     }else if(key === 'pi'){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev: X_prev, key, res: X_res, rad});
+            error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
         else{
-            X_res = {...ResetRegister(), mStr: '3.1415926'};
+            res.X = {...ResetRegister(), mStr: '3.1415926'};
         }
     }else if(key === 'F'){
         return ({register: null, state: {...SelfState, FunctionalMode: true}});
     }else if(key === 'arc'){
         return ({register: null, state: {...SelfState, ArcMode: true}});
     }else if('+-*/'.includes(key)){
+        if(res.Y.mStr){ //сначала считаем промежуточный итог
+            let tmp = EvalHandler(prev);
+            if(tmp){
+                res = tmp;
+            }else{
+                error = true;
+            }
+        }
         res.X.operation = key;
         bin_operation_flag = true;
         res.Y = {...res.X};
@@ -72,16 +77,21 @@ export function KeyHandler({prev, key, SelfState}){
         if(tmp){
             res = tmp;
             new_num_flag = true;
+            bin_operation_flag = true;
         }else{
             error = true;
         }
     }
 
 
-    res.X.mantissa = X_res.mStr === '' ? 0 : Number(X_res.mStr);
-    res.X.dStr = (X_res.dStr === '0' || X_res.dStr === '-0' ? '' : X_res.dStr);
-    res.X.degree = X_res.dStr === '' ? 0 : Number(X_res.dStr);
-    res.X.mOverflow = IsOverflow(X_res.mantissa);
+    res.X.mantissa = res.X.mStr === '' ? 0 : Number(res.X.mStr);
+    res.X.dStr = (res.X.dStr === '0' || res.X.dStr === '-0' ? '' : res.X.dStr);
+    res.X.degree = res.X.dStr === '' ? 0 : Number(res.X.dStr);
+    res.X.mOverflow = IsOverflow(res.X.mantissa);
+
+    res.Y.mantissa = res.Y.mStr === '' ? 0 : Number(res.Y.mStr);
+    res.Y.dStr = (res.Y.dStr === '0' || res.Y.dStr === '-0' ? '' : res.Y.dStr);
+    res.Y.degree = res.Y.dStr === '' ? 0 : Number(res.Y.dStr);
 
     if(!bin_operation_flag)
         res.X.operation = null;
@@ -243,20 +253,30 @@ function EvalHandler(prev){
     let newMantissa = 0;
 
     if(CurrentOper === '-'){
-        newMantissa = wr - dr;
+        if(prev.X.operation !== '=')
+            newMantissa = wr - dr;
+        else
+            newMantissa = dr - wr;
     }else if(CurrentOper === '+'){
         newMantissa = wr + dr;
     }else if(CurrentOper === '*'){
         newMantissa = wr * dr;
     }else if(CurrentOper === '/' && dr != 0){
-        newMantissa = wr / dr;
+        if(prev.X.operation !== '=')
+            newMantissa = wr / dr;
+        else
+            newMantissa = dr / wr;
     }else{
         return null;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: 0});
-
-    return( {...prev, X: {...ResetRegister(), mStr: String(processed.mantissa), dStr: String(processed.degree)}, Y: {...prev.X, operation: prev.Y.operation}});
+    if(prev.X.operation !== '='){
+        return( {...prev, X: {...ResetRegister(), mStr: String(processed.mantissa), dStr: String(processed.degree), operation: '='}, Y: {...prev.X, operation: prev.Y.operation}});
+    }else{
+        return( {...prev, X: {...ResetRegister(), mStr: String(processed.mantissa), dStr: String(processed.degree), operation: '='}, Y: {...prev.Y, operation: prev.Y.operation}});
+    }
+    
 }
 
 
