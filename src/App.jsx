@@ -63,13 +63,41 @@ function App() {
         <Controls SW={{PowerSwitch, DegRadSwitch}} ButtonHandler={ButtonHandler}/>
       </div>
       
-      <div className="buttons">
-        <input
-          type="text"
-          value={SymbolStr}
-          onChange={(e) => setSymbolStr(e.target.value)}
-          placeholder=""
-        />
+      <div className='registers'>
+        <table>
+          <colgroup>
+            <col className="register" />
+            <col className="mantissa" />
+            <col className="degree" />
+            <col className="operation" />
+          </colgroup>
+          <tbody>
+            <tr>
+              <th>X</th>
+              <th>{Registers.X.mantissa  ?? 0}</th>
+              <th>{Registers.X.degree ?? 0}</th>
+              <th>{Registers.X.operation}</th>
+            </tr>
+            <tr>
+              <th>Y</th>
+              <th>{Registers.Y.mantissa ?? 0}</th>
+              <th>{Registers.Y.degree ?? 0}</th>
+              <th>{Registers.Y.operation}</th>
+            </tr>
+            <tr>
+              <th>A</th>
+              <th>{Registers.A.mantissa ?? 0}</th>
+              <th>{Registers.A.degree ?? 0}</th>
+              <th>{Registers.A.operation}</th>
+            </tr>
+            <tr>
+              <th>B</th>
+              <th>{Registers.B.mantissa ?? 0}</th>
+              <th>{Registers.B.degree ?? 0}</th>
+              <th>{Registers.B.operation}</th>
+            </tr>
+          </tbody>
+        </table>
       </div>
      
     </main>

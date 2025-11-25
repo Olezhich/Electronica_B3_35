@@ -11,6 +11,7 @@ export function KeyHandler({prev, key, SelfState}){
     };
     let error = false;
     let rad = SelfState.RadianMode;
+    let bin_operation_flag = false;
 
     if(SelfState.OverFlow){
         if(key === 'C'){
@@ -65,6 +66,9 @@ export function KeyHandler({prev, key, SelfState}){
     res.X.dStr = (X_res.dStr === '0' || X_res.dStr === '-0' ? '' : X_res.dStr);
     res.X.degree = X_res.dStr === '' ? 0 : Number(X_res.dStr);
     res.X.mOverflow = IsOverflow(X_res.mantissa);
+
+    if(!bin_operation_flag)
+        res.X.operation = null;
     //console.log('KeyHandler: ',res.mStr, res.dStr);
     let state = {...SelfState, FunctionalMode: false, ArcMode: false};
     if(error || CheckOverflow(res)){

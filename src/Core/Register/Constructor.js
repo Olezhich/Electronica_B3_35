@@ -7,6 +7,7 @@ export function ResetRegister() {
             degree: 0,
             mOverflow: false,
             inputDegree: false,
+            operation: null,
         }
     );
 }
