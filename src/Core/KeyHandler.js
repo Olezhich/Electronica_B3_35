@@ -25,6 +25,7 @@ export function KeyHandler({prev, key, SelfState}){
         else{
             if(new_num_flag){
                 prev.X = ResetRegister();
+                res.X = ResetRegister();
             }
             NumberHandler({prev: prev.X, key, res: res.X});
             new_num_flag = false;
@@ -72,6 +73,17 @@ export function KeyHandler({prev, key, SelfState}){
         bin_operation_flag = true;
         res.Y = {...res.X};
         new_num_flag = true;
+    }else if(key === '('){
+        res = OpenBracketHandler(prev);
+        new_num_flag = true;
+    }else if(key === ')'){
+        let tmp = CloseBracketHandler(prev);
+        if(tmp){
+            res = tmp;
+        }else{
+            error = true;
+        }
+        bin_operation_flag = true;
     }else if(key === '='){
         let tmp = EvalHandler(prev);
         if(tmp){
@@ -245,6 +257,11 @@ function ArcHandler({prev, key, res, rad}){
 }
 
 function EvalHandler(prev){
+    if(!prev.Y.mStr){
+        return(
+            {...prev, X: {...prev.X, operation: null}}
+        );
+    }
     const CurrentOper = prev.Y.operation;
     
     const wr = prev.Y.mantissa * Math.pow(10, prev.Y.degree);
@@ -278,5 +295,41 @@ function EvalHandler(prev){
     }
     
 }
+
+function OpenBracketHandler(prev){
+    return(
+        {...prev, Y: {...ResetRegister()}, B: {...prev.A}, A: {...prev.Y}}
+    );
+}
+
+
+function CloseBracketHandler(prev){
+    console.log('NA VHOD', prev);
+    let xy_res = EvalHandler(prev);
+    if(!xy_res){
+        return null;
+    }
+    xy_res = {...xy_res, X: {...xy_res.X, operation: null}, Y: {...xy_res.A}, A: {...xy_res.B}, B: {...ResetRegister()}};
+
+    if(xy_res.Y.mStr){
+        xy_res.X.mantissa = xy_res.X.mStr === '' ? 0 : Number(xy_res.X.mStr);
+        xy_res.X.degree = xy_res.X.dStr === '' ? 0 : Number(xy_res.X.dStr);
+
+        xy_res.Y.mantissa = xy_res.Y.mStr === '' ? 0 : Number(xy_res.Y.mStr);
+        xy_res.Y.degree = xy_res.Y.dStr === '' ? 0 : Number(xy_res.Y.dStr);
+
+        console.log('PREMEZHUTOCHNYY', xy_res);
+
+        xy_res = EvalHandler(xy_res);
+        if(!xy_res){
+            return null;
+        }
+    }
+
+    return (
+        {...xy_res, X: {...xy_res.X, operation: null}, Y: {...xy_res.A}, A: {...xy_res.B}}
+    );
+}
+
 
 
