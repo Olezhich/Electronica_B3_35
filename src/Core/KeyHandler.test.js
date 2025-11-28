@@ -54,6 +54,25 @@ test.each([
     // arctan(x)
     {inputSequence: ['1', '/-/', 'arc', '3'], expected: {...ResetRegister(), mantissa: -45, degree: 0}, 
         comment: "Example 1: arcsin(30)"},
+    //___ARITHMETICS___
+    // + - * /
+    {inputSequence: ['6', '.', '3', '+', '5', '.', '6', '5', '='], expected: {...ResetRegister(), mantissa: 11.95, degree: 0}, 
+        comment: "Example 1: 6.3+5.65"},
+    {inputSequence: ['7', '5', 'vp', '3', '-', '8', 'vp', '3', '/-/', '='], expected: {...ResetRegister(), mantissa: 74999.992, degree: 0}, 
+        comment: "Example 2: 75*10^3 - 8*10^-3"},
+    {inputSequence: ['9', '.', '3', '1', 'vp', '3', '2', '/-/', '/', '5', 'vp', '7', '='], expected: {...ResetRegister(), mantissa: 1.8619999, degree: -39}, 
+        comment: "Example 3: 9.31*10^-32 / 5*10^7"},
+    {inputSequence: ['0', '.', '8', '2', '/-/', 'vp', '2', '7', '*',  '3', '.', '1',  'vp', '1', '3', '='], expected: {...ResetRegister(), mantissa: -25420000, degree: 33}, 
+        comment: "Example 4: -0.82*10^27 * 3.1*10^13"},
+    {inputSequence: ['4', '.', '3', '+', '(', '5', '.', '1', '*',  '4', 'vp', '2',  '/-/', ')', '-', '(',
+        '(', '0', '.', '9', 'vp', '5', '+', '2', '3', ')', '/', '2', ')', '=',
+    ], expected: {...ResetRegister(), mantissa: -45006.996, degree: 0}, 
+        comment: "Example 5: () - [()/]"},
+
+
+
+
+
 
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRS();

@@ -1,4 +1,4 @@
-export { ResetRegister, ResetRS } from "./Constructor";
+export { ResetRegister, ResetRS, CloneRS } from "./Constructor";
 
 export { IsOverflow, CheckOverflow } from "./Overflow";
 

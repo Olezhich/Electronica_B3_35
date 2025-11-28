@@ -62,7 +62,7 @@ function App() {
         <Display Str={SymbolStr} />
         <Controls SW={{PowerSwitch, DegRadSwitch}} ButtonHandler={ButtonHandler}/>
       </div>
-      
+      <p>{Registers.PrevOperation}</p>
       <div className='registers'>
         <table>
           <colgroup>
