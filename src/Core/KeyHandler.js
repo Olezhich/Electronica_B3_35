@@ -9,7 +9,7 @@ export function KeyHandler({prev, key, SelfState}){
 
     if(SelfState.OverFlow){
         if(key === 'C'){
-            return({register: ResetRS(), state: {...SelfState, FunctionalMode: false, ArcMode: false, OverFlow: false}});
+            return({register: {...ResetRS(), PrevOperation: 'C'}, state: {...SelfState, FunctionalMode: false, ArcMode: false, OverFlow: false}});
         }else{
             return({register: res, state: SelfState});
         }
@@ -29,6 +29,7 @@ export function KeyHandler({prev, key, SelfState}){
             }
             NumberHandler({prev: prev.X, key, res: res.X});
             new_num_flag = false;
+            key = prev.PrevOperation;
         }
     }else if(key === '/-/'){
         if(SelfState.FunctionalMode)
@@ -40,16 +41,21 @@ export function KeyHandler({prev, key, SelfState}){
             if(prev.X.mStr !== '')
                 res.X.mStr = prev.X.mStr.startsWith('-') ? prev.X.mStr.slice(1) : '-' + prev.X.mStr;
         }
+        key = prev.PrevOperation;
     }else if(key === '.'){
         if(SelfState.FunctionalMode)
             error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
         else{
             res.X.mStr = prev.X.mStr.includes('.') ? prev.X.mStr : prev.X.mStr + '.';
         }
+        key = prev.PrevOperation;
     }else if(key === 'vp'){
         res.X.inputDegree = true;
     }else if(key === 'C'){
-        return({register: ResetRS(), state: {...SelfState, FunctionalMode: false, ArcMode: false}});
+        if(prev.PrevOperation === 'C'){
+            return({register: ResetRS(), state: {...SelfState, FunctionalMode: false, ArcMode: false}});
+        }
+        return({register: {...prev, X: {...ResetRegister()}, PrevOperation: 'C'}, state: {...SelfState, FunctionalMode: false, ArcMode: false}});
     }else if(key === 'pi'){
         if(SelfState.FunctionalMode)
             error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
@@ -104,10 +110,11 @@ export function KeyHandler({prev, key, SelfState}){
     res.Y.mantissa = res.Y.mStr === '' ? 0 : Number(res.Y.mStr);
     res.Y.dStr = (res.Y.dStr === '0' || res.Y.dStr === '-0' ? '' : res.Y.dStr);
     res.Y.degree = res.Y.dStr === '' ? 0 : Number(res.Y.dStr);
+    res.PrevOperation = key;
+    
+    // if(!bin_operation_flag)
+    //     res.X.operation = null;
 
-    if(!bin_operation_flag)
-        res.X.operation = null;
-    //console.log('KeyHandler: ',res.mStr, res.dStr);
     let state = {...SelfState, FunctionalMode: false, ArcMode: false, NewNumMode: new_num_flag};
     if(error || CheckOverflow(res)){
         state.OverFlow = true;
@@ -270,7 +277,7 @@ function EvalHandler(prev){
     let newMantissa = 0;
 
     if(CurrentOper === '-'){
-        if(prev.X.operation !== '=')
+        if(prev.PrevOperation !== '=')
             newMantissa = wr - dr;
         else
             newMantissa = dr - wr;
@@ -279,16 +286,17 @@ function EvalHandler(prev){
     }else if(CurrentOper === '*'){
         newMantissa = wr * dr;
     }else if(CurrentOper === '/' && dr != 0){
-        if(prev.X.operation !== '=')
+        if(prev.PrevOperation !== '=')
             newMantissa = wr / dr;
         else
             newMantissa = dr / wr;
+            // newMantissa = wr / dr;
     }else{
         return null;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: 0});
-    if(prev.X.operation !== '='){
+    if(prev.PrevOperation !== '='){
         return( {...prev, X: {...ResetRegister(), mStr: String(processed.mantissa), dStr: String(processed.degree), operation: '='}, Y: {...prev.X, operation: prev.Y.operation}});
     }else{
         return( {...prev, X: {...ResetRegister(), mStr: String(processed.mantissa), dStr: String(processed.degree), operation: '='}, Y: {...prev.Y, operation: prev.Y.operation}});
@@ -304,7 +312,6 @@ function OpenBracketHandler(prev){
 
 
 function CloseBracketHandler(prev){
-    console.log('NA VHOD', prev);
     let xy_res = EvalHandler(prev);
     if(!xy_res){
         return null;
@@ -318,17 +325,18 @@ function CloseBracketHandler(prev){
         xy_res.Y.mantissa = xy_res.Y.mStr === '' ? 0 : Number(xy_res.Y.mStr);
         xy_res.Y.degree = xy_res.Y.dStr === '' ? 0 : Number(xy_res.Y.dStr);
 
-        console.log('PREMEZHUTOCHNYY', xy_res);
-
         xy_res = EvalHandler(xy_res);
         if(!xy_res){
             return null;
         }
-    }
-
-    return (
+        return (
         {...xy_res, X: {...xy_res.X, operation: null}, Y: {...xy_res.A}, A: {...xy_res.B}}
+        );
+    }
+    return(
+        {...xy_res, X: {...xy_res.X, operation: null}}
     );
+    
 }
 
 

@@ -21,6 +21,7 @@ export function ResetRS(){
             Y: ResetRegister(),
             A: ResetRegister(),
             B: ResetRegister(),
+            PrevOperation: null,
         }
     )
 }
