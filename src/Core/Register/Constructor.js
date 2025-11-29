@@ -21,6 +21,7 @@ export function ResetRS(){
             Y: ResetRegister(),
             A: ResetRegister(),
             B: ResetRegister(),
+            M: ResetRegister(),
             PrevOperation: null,
         }
     )
@@ -33,5 +34,6 @@ export function CloneRS(prev) {
     Y: { ...prev.Y },
     A: { ...prev.A },
     B: { ...prev.B },
+    M: { ...prev.M },
   };
 }

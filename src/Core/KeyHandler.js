@@ -71,7 +71,15 @@ export function KeyHandler({prev, key, SelfState}){
         res.X = {...prev.Y, operation: prev.X.operation};
         res.Y = {...prev.X, operation: prev.Y.operation};
     }else if('+-*/'.includes(key)){
-        if(res.Y.mStr){ //сначала считаем промежуточный итог
+        if(SelfState.FunctionalMode){
+            let tmp = MemoryHandler(prev, key);
+            if(tmp){
+                res = tmp;
+            }else{
+                error = true;
+            }
+        }else{
+            if(res.Y.mStr){ //сначала считаем промежуточный итог
             let tmp = EvalHandler(prev);
             if(tmp){
                 res = tmp;
@@ -83,6 +91,7 @@ export function KeyHandler({prev, key, SelfState}){
         bin_operation_flag = true;
         res.Y = {...res.X};
         new_num_flag = true;
+        }
     }else if(key === '('){
         res = OpenBracketHandler(prev);
         new_num_flag = true;
@@ -343,5 +352,27 @@ function CloseBracketHandler(prev){
     
 }
 
+function MemoryHandler(prev, key){
+    let mem_mantissa = prev.M.mantissa * Math.pow(10, prev.Y.degree);
+    const dr = prev.X.mantissa * Math.pow(10, prev.X.degree);
+    if(key ==='+'){
+        mem_mantissa += dr;
+    }else if(key === '-'){
+        mem_mantissa -= dr;
+    }else if(key === '*'){
+        mem_mantissa *= dr;
+    }else if(key === '/' && dr !== 0){
+        mem_mantissa /= dr;
+    }else{
+        return null;
+    }
+
+    const processed = NormalizeRegister({mantissa: mem_mantissa, degree: 0});
+
+    return(
+        {...prev, M: {...prev.M, mStr: String(processed.mantissa), dStr: String(processed.degree), mantissa: processed.mantissa, degree: processed.degree}}
+    );
+
+}
 
 

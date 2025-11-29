@@ -8,7 +8,7 @@ function Display({Str}) {
         while(i < Str.length && symbols.length < 12){
             let char = Str[i];
             i++;
-            if(Str[i] === '.'){
+            if(Str[i] === '.' || Str[i] === 'm'){
                 char += Str[i];
                 i++;
             }
@@ -17,6 +17,7 @@ function Display({Str}) {
         while (symbols.length < 12) {
             symbols.push(' ');
         }
+        console.log('DISPAY!!!!', symbols);
         return(symbols);
     };
 

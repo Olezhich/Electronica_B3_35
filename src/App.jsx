@@ -49,7 +49,7 @@ function App() {
 
   useEffect(() => {
     if(PowerState === true){
-      setSymbolStr(DisplayString(Registers.X, SelfState));
+      setSymbolStr(DisplayString(Registers.X, Registers.M, SelfState));
     }else{
       setSymbolStr('');
     }
@@ -95,6 +95,12 @@ function App() {
               <th>{Registers.B.mantissa ?? 0}</th>
               <th>{Registers.B.degree ?? 0}</th>
               <th>{Registers.B.operation}</th>
+            </tr>
+            <tr>
+              <th>M</th>
+              <th>{Registers.M.mantissa ?? 0}</th>
+              <th>{Registers.M.degree ?? 0}</th>
+              <th>{Registers.M.operation}</th>
             </tr>
           </tbody>
         </table>
