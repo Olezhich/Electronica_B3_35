@@ -52,10 +52,13 @@ export function KeyHandler({prev, key, SelfState}){
     }else if(key === 'vp'){
         res.X.inputDegree = true;
     }else if(key === 'C'){
-        if(prev.PrevOperation === 'C'){
-            return({register: ResetRS(), state: {...SelfState, FunctionalMode: false, ArcMode: false}});
+        if(SelfState.FunctionalMode){
+            ;
+        }else if(prev.PrevOperation === 'C'){
+            return({register: {...ResetRS(), M: {...prev.M}}, state: {...SelfState, FunctionalMode: false, ArcMode: false}});
+        }else{
+            return({register: {...prev, X: {...ResetRegister()}, PrevOperation: 'C'}, state: {...SelfState, FunctionalMode: false, ArcMode: false}});
         }
-        return({register: {...prev, X: {...ResetRegister()}, PrevOperation: 'C'}, state: {...SelfState, FunctionalMode: false, ArcMode: false}});
     }else if(key === 'pi'){
         if(SelfState.FunctionalMode)
             error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
@@ -67,9 +70,14 @@ export function KeyHandler({prev, key, SelfState}){
     }else if(key === 'arc'){
         return ({register: null, state: {...SelfState, ArcMode: true}});
     }else if(key === '<->'){
+        if(SelfState.FunctionalMode){
+            res.M = {...prev.X, operation: prev.M.operation};
+            res.X = {...prev.M, operation: prev.X.operation};
+        }else{
+            res.X = {...prev.Y, operation: prev.X.operation};
+            res.Y = {...prev.X, operation: prev.Y.operation};
+        }
         key = prev.PrevOperation;
-        res.X = {...prev.Y, operation: prev.X.operation};
-        res.Y = {...prev.X, operation: prev.Y.operation};
     }else if('+-*/'.includes(key)){
         if(SelfState.FunctionalMode){
             let tmp = MemoryHandler(prev, key);
@@ -80,37 +88,59 @@ export function KeyHandler({prev, key, SelfState}){
             }
         }else{
             if(res.Y.mStr){ //сначала считаем промежуточный итог
-            let tmp = EvalHandler(prev);
+                let tmp = EvalHandler(prev);
+                if(tmp){
+                    res = tmp;
+                }else{
+                    error = true;
+                }
+            }
+            res.X.operation = key;
+            bin_operation_flag = true;
+            res.Y = {...res.X};
+            new_num_flag = true;
+        }
+    }else if(key === '('){
+        if(SelfState.FunctionalMode){
+            let tmp = MemoryHandler(prev, key);
             if(tmp){
                 res = tmp;
             }else{
                 error = true;
             }
-        }
-        res.X.operation = key;
-        bin_operation_flag = true;
-        res.Y = {...res.X};
-        new_num_flag = true;
-        }
-    }else if(key === '('){
-        res = OpenBracketHandler(prev);
-        new_num_flag = true;
-    }else if(key === ')'){
-        let tmp = CloseBracketHandler(prev);
-        if(tmp){
-            res = tmp;
         }else{
-            error = true;
-        }
-        bin_operation_flag = true;
-    }else if(key === '='){
-        let tmp = EvalHandler(prev);
-        if(tmp){
-            res = tmp;
+            res = OpenBracketHandler(prev);
             new_num_flag = true;
-            bin_operation_flag = true;
+        }
+    }else if(key === ')'){
+        if(SelfState.FunctionalMode){
+            let tmp = MemoryHandler(prev, key);
+            if(tmp){
+                res = tmp;
+            }else{
+                error = true;
+            }
         }else{
-            error = true;
+            let tmp = CloseBracketHandler(prev);
+            if(tmp){
+                res = tmp;
+            }else{
+                error = true;
+            }
+            bin_operation_flag = true;
+        }
+    }else if(key === '='){
+        if(SelfState.FunctionalMode){
+            res.X = {...prev.M, operation: prev.X.operation};
+        }else{
+            let tmp = EvalHandler(prev);
+            if(tmp){
+                res = tmp;
+                new_num_flag = true;
+                bin_operation_flag = true;
+            }else{
+                error = true;
+            }
         }
     }
 
@@ -363,14 +393,23 @@ function MemoryHandler(prev, key){
         mem_mantissa *= dr;
     }else if(key === '/' && dr !== 0){
         mem_mantissa /= dr;
+    }else if(key === ')'){
+        mem_mantissa = 0;
+    }else if(key === '('){
+        mem_mantissa = dr;
     }else{
         return null;
     }
 
     const processed = NormalizeRegister({mantissa: mem_mantissa, degree: 0});
+    const mstr = String(processed.mantissa);
+    const dstr = String(processed.degree);
+
+    const new_mstr = mstr === '0' || mstr === '-0' ? '' : mstr
+    const new_dstr = dstr === '0' || dstr === '-0' ? '' : dstr
 
     return(
-        {...prev, M: {...prev.M, mStr: String(processed.mantissa), dStr: String(processed.degree), mantissa: processed.mantissa, degree: processed.degree}}
+        {...prev, M: {...prev.M, mStr: new_mstr, dStr: new_dstr, mantissa: processed.mantissa, degree: processed.degree}}
     );
 
 }
