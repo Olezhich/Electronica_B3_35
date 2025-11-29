@@ -47,7 +47,7 @@ function Buttons({ButtonHandler}){
         '7', '8', '9', '(',')',
         '4', '5', '6','*','/',
         '1', '2', '3','+','-',
-        '0','.','pi','','=',
+        '0','.','pi','<->','=',
     ];
 
     const keyContext = Array.from({length: 25}, (_, idx) => ({img: key_images[idx], val: key_values[idx]}))

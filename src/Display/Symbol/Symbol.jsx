@@ -5,19 +5,19 @@ import {Dot, ASegment, BSegment, CSegment,
 } from "./Segment/Segments.jsx";
 
 const SegmentHandler = (symbolStr, allowed) => {
-    return (symbolStr && allowed.includes(symbolStr[0]));
+    return (symbolStr && allowed.includes(symbolStr[0])|| symbolStr && allowed.includes(symbolStr[1]));
 }
 
 function Symbol({symbolStr}){
     return(
         <div className={styles.symbol}>
             <Dot isOn={symbolStr && symbolStr.endsWith('.')} />
-            <ASegment isOn={SegmentHandler(symbolStr, '02356789')} />
-            <BSegment isOn={SegmentHandler(symbolStr, '01234789')} />
+            <ASegment isOn={SegmentHandler(symbolStr, '02356789m')} />
+            <BSegment isOn={SegmentHandler(symbolStr, '01234789m')} />
             <CSegment isOn={SegmentHandler(symbolStr, '013456789')} />
             <DSegment isOn={SegmentHandler(symbolStr, '0235689')} />
             <ESegment isOn={SegmentHandler(symbolStr, '0268')} />
-            <FSegment isOn={SegmentHandler(symbolStr, '045689')} />
+            <FSegment isOn={SegmentHandler(symbolStr, '045689m')} />
             <GSegment isOn={SegmentHandler(symbolStr, '2345689-')} />
         </div>
     );

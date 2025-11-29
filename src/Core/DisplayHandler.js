@@ -1,17 +1,57 @@
-export function DisplayString(DisplayRegister, SelfState){
-    if(SelfState.OverFlow){
-        return('.0'.repeat(8) + '..0.0.');
+// export function DisplayString(DisplayRegister, MemoryRegister, SelfState){
+//     if(SelfState.OverFlow){
+//         return('.0'.repeat(8) + '..0.0.');
+//     }
+//     let mem = (MemoryRegister.mStr === '') ? false : true;
+//     let displayStr = ((DisplayRegister.mantissa < 0) ? '' : ' ') + 
+//         preciseFloatToString(DisplayRegister.mantissa) + 
+//         (preciseFloatToString(DisplayRegister.mantissa).includes('.') ? '' : '.');
+//     const currentLen = displayStr.length;
+//     displayStr += ' '.repeat(10 - currentLen);
+//     let degreeStr = ((DisplayRegister.degree < 0) ? '' : ' ') + 
+//         ((DisplayRegister.degree > 1  || DisplayRegister.degree < 0) ? 
+//             String(DisplayRegister.degree) : (DisplayRegister.inputDegree && DisplayRegister.dStr ? String(DisplayRegister.degree) : ''));
+//     console.log(displayStr + degreeStr);
+//     return (displayStr + degreeStr);
+// }
+
+export function DisplayString(DisplayRegister, MemoryRegister, SelfState) {
+    if (SelfState.OverFlow) {
+        return '.0'.repeat(8) + '..0.0.';
     }
-    let displayStr = ((DisplayRegister.mantissa < 0) ? '' : ' ') + 
-        preciseFloatToString(DisplayRegister.mantissa) + 
+
+    const mem = MemoryRegister.mStr !== '';
+    let displayStr = ((DisplayRegister.mantissa < 0) ? '' : ' ') +
+        preciseFloatToString(DisplayRegister.mantissa) +
         (preciseFloatToString(DisplayRegister.mantissa).includes('.') ? '' : '.');
     const currentLen = displayStr.length;
     displayStr += ' '.repeat(10 - currentLen);
-    let degreeStr = ((DisplayRegister.degree < 0) ? '' : ' ') + 
-        ((DisplayRegister.degree > 1  || DisplayRegister.degree < 0) ? 
-            String(DisplayRegister.degree) : (DisplayRegister.inputDegree && DisplayRegister.dStr ? String(DisplayRegister.degree) : ''));
+
+    // Определяем, нужно ли вообще выводить степень (как в оригинале)
+    let degreeValue = null;
+    if (DisplayRegister.degree > 1 || DisplayRegister.degree < 0) {
+        degreeValue = String(DisplayRegister.degree);
+    } else if (DisplayRegister.inputDegree && DisplayRegister.dStr) {
+        degreeValue = String(DisplayRegister.degree);
+    }
+
+    let degreeStr = '';
+    if (mem) {
+        const sign = DisplayRegister.degree < 0 ? '-' : ' ';
+        if (degreeValue !== null) {
+            // Степень не ноль — показываем модуль после 'm'
+            degreeStr = sign + 'm' + Math.abs(DisplayRegister.degree);
+        } else {
+            // Степень 0 — только 'm'
+            degreeStr = sign + 'm';
+        }
+    } else if (degreeValue !== null) {
+        // Без 'm' — как было
+        degreeStr = (DisplayRegister.degree < 0) ? String(DisplayRegister.degree) : ' ' + String(DisplayRegister.degree);
+    }
+
     console.log(displayStr + degreeStr);
-    return (displayStr + degreeStr);
+    return displayStr + degreeStr;
 }
 
 function preciseFloatToString(num) {
