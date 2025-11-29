@@ -9,6 +9,8 @@ import { DisplayString } from './Core/DisplayHandler';
 import body from './assets/body.png'
 import { ResetRegister, ResetRS } from './Core/Register';
 import { ResetSelfState } from './Core/SelfState';
+import RegistersTable from './RegTable';
+import InstructionViewer from './Instruction/InstructionView';
 
 
 function App() {
@@ -62,50 +64,10 @@ function App() {
         <Display Str={SymbolStr} />
         <Controls SW={{PowerSwitch, DegRadSwitch}} ButtonHandler={ButtonHandler}/>
       </div>
-      <p>{Registers.PrevOperation}</p>
-      <div className='registers'>
-        <table>
-          <colgroup>
-            <col className="register" />
-            <col className="mantissa" />
-            <col className="degree" />
-            <col className="operation" />
-          </colgroup>
-          <tbody>
-            <tr>
-              <th>X</th>
-              <th>{Registers.X.mantissa  ?? 0}</th>
-              <th>{Registers.X.degree ?? 0}</th>
-              <th>{Registers.X.operation}</th>
-            </tr>
-            <tr>
-              <th>Y</th>
-              <th>{Registers.Y.mantissa ?? 0}</th>
-              <th>{Registers.Y.degree ?? 0}</th>
-              <th>{Registers.Y.operation}</th>
-            </tr>
-            <tr>
-              <th>A</th>
-              <th>{Registers.A.mantissa ?? 0}</th>
-              <th>{Registers.A.degree ?? 0}</th>
-              <th>{Registers.A.operation}</th>
-            </tr>
-            <tr>
-              <th>B</th>
-              <th>{Registers.B.mantissa ?? 0}</th>
-              <th>{Registers.B.degree ?? 0}</th>
-              <th>{Registers.B.operation}</th>
-            </tr>
-            <tr>
-              <th>M</th>
-              <th>{Registers.M.mantissa ?? 0}</th>
-              <th>{Registers.M.degree ?? 0}</th>
-              <th>{Registers.M.operation}</th>
-            </tr>
-          </tbody>
-        </table>
+      <div>
+        <RegistersTable Registers={Registers}/>     
+        <InstructionViewer />
       </div>
-     
     </main>
   );
 }
