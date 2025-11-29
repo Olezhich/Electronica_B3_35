@@ -30,9 +30,9 @@
 }
 
 .instructionBtn.active {
-  background-color: #0d6efd;
+  background-color: maroon;
   color: white;
-  border-color: #0d6efd;
+  border-color: maroon;
 }
 
 .instructionPreview {

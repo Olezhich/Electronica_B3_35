@@ -40,7 +40,7 @@ function App() {
   const ButtonHandler = (key) =>{
     let currentState;
     setRegisters(prev => {
-      const result = KeyHandler({ prev, key, SelfState});
+      const result = KeyHandler({ prev, key, SelfState, PowerState});
       currentState = result.state;
       return result.register ?? prev;
     });
@@ -60,11 +60,14 @@ function App() {
 
   return (
     <main>
+      <header>
+        <h1>Эмулятор калькулятора Электроника Б3-35</h1>
+      </header>
       <div className="body" style={{backgroundImage: `url(${body})`}}>
         <Display Str={SymbolStr} />
         <Controls SW={{PowerSwitch, DegRadSwitch}} ButtonHandler={ButtonHandler}/>
       </div>
-      <div>
+      <div className='meta'>
         <RegistersTable Registers={Registers}/>     
         <InstructionViewer />
       </div>

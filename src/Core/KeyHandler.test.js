@@ -77,8 +77,9 @@ test.each([
 ])("$comment", ({inputSequence, expected}) => {
     let prev = ResetRS();
     let SelfState = ResetSelfState();
+    let PowerState = true;
     for(const key of inputSequence){
-        res = KeyHandler({prev, key, SelfState});
+        res = KeyHandler({prev, key, SelfState, PowerState});
         prev = res.register ?? prev;
         SelfState = res.state;
     };
