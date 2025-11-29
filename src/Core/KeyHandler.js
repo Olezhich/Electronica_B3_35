@@ -66,6 +66,10 @@ export function KeyHandler({prev, key, SelfState}){
         return ({register: null, state: {...SelfState, FunctionalMode: true}});
     }else if(key === 'arc'){
         return ({register: null, state: {...SelfState, ArcMode: true}});
+    }else if(key === '<->'){
+        key = prev.PrevOperation;
+        res.X = {...prev.Y, operation: prev.X.operation};
+        res.Y = {...prev.X, operation: prev.Y.operation};
     }else if('+-*/'.includes(key)){
         if(res.Y.mStr){ //сначала считаем промежуточный итог
             let tmp = EvalHandler(prev);
