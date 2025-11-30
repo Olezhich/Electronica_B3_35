@@ -50,7 +50,6 @@ export function DisplayString(DisplayRegister, MemoryRegister, SelfState) {
         degreeStr = (DisplayRegister.degree < 0) ? String(DisplayRegister.degree) : ' ' + String(DisplayRegister.degree);
     }
 
-    console.log(displayStr + degreeStr);
     return displayStr + degreeStr;
 }
 
