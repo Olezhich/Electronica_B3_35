@@ -15,7 +15,7 @@ export function ExtractSignificantDigits(num) {
         num *= 10;
         shift--;
     }
-    console.log(num, shift);
+    // console.log(num, shift);
     while (num >= 100_000_000) {
         num = Math.trunc(num/10);
         shift++;
@@ -109,6 +109,6 @@ export function NormalizeRegister({mantissa, degree}) {
 
     const round_val = 10 ** (m_len + CalculateMeanZeros(mantissa));
     mantissa = Math.round(mantissa * round_val) / round_val;
-    console.log('NR', m_len, round_val, mantissa, degree);
+    // console.log('NR', m_len, round_val, mantissa, degree);
     return { mantissa: mantissa, degree: degree};
 }

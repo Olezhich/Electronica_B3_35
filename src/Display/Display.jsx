@@ -17,7 +17,6 @@ function Display({Str}) {
         while (symbols.length < 12) {
             symbols.push(' ');
         }
-        console.log('DISPAY!!!!', symbols);
         return(symbols);
     };
 
