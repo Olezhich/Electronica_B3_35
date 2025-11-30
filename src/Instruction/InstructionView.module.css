@@ -1,0 +1,48 @@
+.instructionViewer {
+  margin: 16px 0;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.instructionButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+
+.instructionBtn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.instructionBtn:hover {
+  background-color: #e9ecef;
+}
+
+.instructionBtn.active {
+  background-color: maroon;
+  color: white;
+  border-color: maroon;
+}
+
+.instructionPreview {
+  text-align: center;
+}
+
+.instructionPreview img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
