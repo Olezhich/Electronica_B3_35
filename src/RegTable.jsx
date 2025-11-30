@@ -27,10 +27,10 @@ const RegistersTable = ({Registers}) => {
         </colgroup>
         <thead>
           <tr>
-            <th>Reg</th>
-            <th>Mantissa</th>
-            <th>Degree</th>
-            <th>Op</th>
+            <th>Рег.</th>
+            <th>Мантисса</th>
+            <th>Порядок</th>
+            <th>Операция</th>
           </tr>
         </thead>
         <tbody>

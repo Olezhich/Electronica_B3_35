@@ -1,10 +1,11 @@
-// InstructionViewer.jsx
+
 import { useState } from 'react';
 import s1 from '../assets/s1.png';
 import s2 from '../assets/s2.png';
 import s3 from '../assets/s3.png';
 import s4 from '../assets/s4.png';
 import s5 from '../assets/s5.png';
+import s6 from '../assets/s6.png';
 
 import styles from './InstructionView.module.css';
 
@@ -14,6 +15,7 @@ const steps = [
   { id: 's3', label: '3', src: s3 },
   { id: 's4', label: '4', src: s4 },
   { id: 's5', label: '5', src: s5 },
+  { id: 's6', label: '6', src: s6 },
 ];
 
 const InstructionViewer = () => {

@@ -27,6 +27,9 @@ header{
     width: 100%;
   height: 15vh;
   background-color: maroon;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: white;
 }
 
 .registers table {
