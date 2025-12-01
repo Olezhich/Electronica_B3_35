@@ -22,7 +22,14 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
 
     if('0123456789'.includes(key)){
         if(SelfState.FunctionalMode)
-            error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
+            if(key === '9'){
+                res.X.operation = 'x^y';
+                bin_operation_flag = true;
+                res.Y = {...res.X};
+                new_num_flag = true;
+            }else{
+                error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
+            }
         else if(SelfState.ArcMode)
             error = error | ArcHandler({prev: prev.X, key, res: res.X, rad});
         else{
@@ -337,6 +344,20 @@ function EvalHandler(prev){
         else
             newMantissa = dr / wr;
             // newMantissa = wr / dr;
+    }else if(CurrentOper === 'x^y'){
+        const result = Math.pow(wr, dr);
+        if(!isFinite(result)){
+            return null;
+        }
+        const absResult = Math.abs(result);
+        if (absResult === 0){
+            return null;
+        }
+        const log10 = Math.log10(absResult);
+        if (log10 < -100 || log10 > 100){
+            return null;
+        }
+        newMantissa = result;
     }else{
         return null;
     }
