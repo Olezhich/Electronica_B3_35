@@ -173,7 +173,10 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
     //     res.X.operation = null;
 
     let state = {...SelfState, FunctionalMode: false, ArcMode: false, NewNumMode: new_num_flag};
-    if(error || CheckOverflow(res)){
+    if(error || CheckOverflow(res.X)){
+        state.OverFlow = true;
+    }
+    if(error || CheckOverflow(res.Y)){
         state.OverFlow = true;
     }
     return({register: res, state});
