@@ -97,10 +97,11 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
                 error = true;
             }
         }else{
-            if(res.Y.mStr){ //сначала считаем промежуточный итог
+            if(res.Y.mStr && res.X.operation != '='){ //сначала считаем промежуточный итог
                 let tmp = EvalHandler(prev);
                 if(tmp){
                     res = tmp;
+
                 }else{
                     error = true;
                 }
@@ -134,6 +135,7 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
             let tmp = CloseBracketHandler(prev);
             if(tmp){
                 res = tmp;
+
             }else{
                 error = true;
             }
@@ -146,6 +148,7 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
             let tmp = EvalHandler(prev);
             if(tmp){
                 res = tmp;
+
                 new_num_flag = true;
                 bin_operation_flag = true;
             }else{
@@ -154,10 +157,11 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
         }
     }
 
-
     res.X.mantissa = res.X.mStr === '' ? 0 : Number(res.X.mStr);
     res.X.dStr = (res.X.dStr === '0' || res.X.dStr === '-0' ? '' : res.X.dStr);
     res.X.degree = res.X.dStr === '' ? 0 : Number(res.X.dStr);
+    res.X.mOverflow = IsOverflow(res.X.mantissa);
+    
     res.X.mOverflow = IsOverflow(res.X.mantissa);
 
     res.Y.mantissa = res.Y.mStr === '' ? 0 : Number(res.Y.mStr);
@@ -212,7 +216,7 @@ function FunctionHandler({prev, key, res, rad}){
         newDegree = -prev.degree;
     }else if(key == '8'){ // 10^x
         newMantissa = 10;
-        newDegree = prev.mantissa;
+        newDegree = prev.mantissa * Math.pow(10, degree);
     }else if(key == '7'){ // e^x
         const maxExpValue = 230.258509; // ln(10^100)
 
