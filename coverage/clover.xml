@@ -1,55 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1765018340478" clover="3.2.0">
-  <project timestamp="1765018340478" name="All files">
-    <metrics statements="492" coveredstatements="343" conditionals="378" coveredconditionals="228" methods="29" coveredmethods="26" elements="899" coveredelements="597" complexity="0" loc="492" ncloc="492" packages="5" files="12" classes="12"/>
+<coverage generated="1765022281654" clover="3.2.0">
+  <project timestamp="1765022281655" name="All files">
+    <metrics statements="506" coveredstatements="353" conditionals="392" coveredconditionals="236" methods="30" coveredmethods="27" elements="928" coveredelements="616" complexity="0" loc="506" ncloc="506" packages="5" files="12" classes="12"/>
     <package name="Core">
-      <metrics statements="342" coveredstatements="215" conditionals="286" coveredconditionals="165" methods="11" coveredmethods="10"/>
+      <metrics statements="356" coveredstatements="225" conditionals="300" coveredconditionals="173" methods="12" coveredmethods="11"/>
       <file name="DisplayHandler.js" path="/Users/olegopolskiy/Desktop/Dev/GIT/ElectronicaB3_35/Electronica_B3_35/src/Core/DisplayHandler.js">
-        <metrics statements="41" coveredstatements="20" conditionals="38" coveredconditionals="21" methods="2" coveredmethods="2"/>
-        <line num="19" count="13" type="cond" truecount="1" falsecount="1"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="23" count="13" type="stmt"/>
-        <line num="24" count="13" type="cond" truecount="2" falsecount="0"/>
-        <line num="27" count="13" type="stmt"/>
-        <line num="28" count="13" type="stmt"/>
-        <line num="31" count="13" type="stmt"/>
-        <line num="32" count="13" type="cond" truecount="4" falsecount="0"/>
-        <line num="33" count="8" type="stmt"/>
-        <line num="34" count="5" type="cond" truecount="2" falsecount="2"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="38" count="13" type="stmt"/>
-        <line num="39" count="13" type="cond" truecount="1" falsecount="1"/>
-        <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="41" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="48" count="13" type="cond" truecount="2" falsecount="0"/>
-        <line num="50" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="53" count="13" type="stmt"/>
-        <line num="57" count="26" type="cond" truecount="2" falsecount="0"/>
-        <line num="59" count="24" type="stmt"/>
-        <line num="62" count="24" type="cond" truecount="1" falsecount="1"/>
+        <metrics statements="56" coveredstatements="31" conditionals="52" coveredconditionals="29" methods="3" coveredmethods="3"/>
+        <line num="2" count="13" type="cond" truecount="1" falsecount="1"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="6" count="13" type="stmt"/>
+        <line num="7" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="13" type="stmt"/>
+        <line num="11" count="13" type="stmt"/>
+        <line num="14" count="13" type="stmt"/>
+        <line num="15" count="13" type="cond" truecount="4" falsecount="0"/>
+        <line num="16" count="8" type="stmt"/>
+        <line num="17" count="5" type="cond" truecount="2" falsecount="2"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="13" type="stmt"/>
+        <line num="22" count="13" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="31" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="13" type="stmt"/>
+        <line num="42" count="26" type="stmt"/>
+        <line num="43" count="26" type="stmt"/>
+        <line num="46" count="26" type="cond" truecount="1" falsecount="1"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="58" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="61" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="63" count="0" type="stmt"/>
-        <line num="64" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="71" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="72" count="0" type="stmt"/>
-        <line num="74" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="76" count="0" type="stmt"/>
-        <line num="77" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="79" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="86" count="0" type="stmt"/>
-        <line num="87" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="88" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
-        <line num="94" count="24" type="cond" truecount="2" falsecount="0"/>
-        <line num="95" count="12" type="stmt"/>
-        <line num="98" count="12" type="stmt"/>
+        <line num="78" count="26" type="cond" truecount="4" falsecount="0"/>
+        <line num="80" count="14" type="stmt"/>
+        <line num="81" count="14" type="stmt"/>
+        <line num="82" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="83" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="86" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="87" count="14" type="stmt"/>
+        <line num="88" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="90" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="96" count="26" type="stmt"/>
+        <line num="100" count="28" type="stmt"/>
+        <line num="101" count="28" type="cond" truecount="2" falsecount="0"/>
+        <line num="103" count="12" type="cond" truecount="1" falsecount="1"/>
+        <line num="104" count="12" type="stmt"/>
+        <line num="105" count="12" type="stmt"/>
       </file>
       <file name="KeyHandler.js" path="/Users/olegopolskiy/Desktop/Dev/GIT/ElectronicaB3_35/Electronica_B3_35/src/Core/KeyHandler.js">
-        <metrics statements="300" coveredstatements="194" conditionals="248" coveredconditionals="144" methods="8" coveredmethods="7"/>
+        <metrics statements="299" coveredstatements="193" conditionals="248" coveredconditionals="144" methods="8" coveredmethods="7"/>
         <line num="5" count="211" type="cond" truecount="1" falsecount="1"/>
         <line num="6" count="0" type="stmt"/>
         <line num="8" count="211" type="stmt"/>
@@ -160,7 +175,6 @@
         <line num="161" count="197" type="cond" truecount="4" falsecount="0"/>
         <line num="162" count="197" type="cond" truecount="2" falsecount="0"/>
         <line num="163" count="197" type="stmt"/>
-        <line num="165" count="197" type="stmt"/>
         <line num="167" count="197" type="cond" truecount="2" falsecount="0"/>
         <line num="168" count="197" type="cond" truecount="3" falsecount="1"/>
         <line num="169" count="197" type="cond" truecount="2" falsecount="0"/>
@@ -524,22 +538,22 @@
       </file>
       <file name="Overflow.js" path="/Users/olegopolskiy/Desktop/Dev/GIT/ElectronicaB3_35/Electronica_B3_35/src/Core/Register/Overflow.js">
         <metrics statements="16" coveredstatements="16" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
-        <line num="4" count="398" type="stmt"/>
-        <line num="5" count="398" type="stmt"/>
-        <line num="6" count="398" type="cond" truecount="2" falsecount="0"/>
-        <line num="7" count="398" type="cond" truecount="2" falsecount="0"/>
-        <line num="8" count="398" type="stmt"/>
-        <line num="14" count="398" type="stmt"/>
+        <line num="5" count="201" type="stmt"/>
+        <line num="6" count="201" type="stmt"/>
+        <line num="7" count="201" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="201" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="201" type="stmt"/>
         <line num="15" count="398" type="stmt"/>
-        <line num="17" count="398" type="cond" truecount="2" falsecount="0"/>
-        <line num="18" count="173" type="stmt"/>
-        <line num="22" count="225" type="stmt"/>
-        <line num="23" count="88" type="stmt"/>
+        <line num="16" count="398" type="stmt"/>
+        <line num="18" count="398" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="173" type="stmt"/>
+        <line num="23" count="225" type="stmt"/>
         <line num="24" count="88" type="stmt"/>
-        <line num="26" count="225" type="cond" truecount="2" falsecount="0"/>
-        <line num="27" count="30" type="stmt"/>
+        <line num="25" count="88" type="stmt"/>
+        <line num="27" count="225" type="cond" truecount="2" falsecount="0"/>
         <line num="28" count="30" type="stmt"/>
-        <line num="31" count="225" type="stmt"/>
+        <line num="29" count="30" type="stmt"/>
+        <line num="32" count="225" type="stmt"/>
       </file>
       <file name="index.js" path="/Users/olegopolskiy/Desktop/Dev/GIT/ElectronicaB3_35/Electronica_B3_35/src/Core/Register/index.js">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

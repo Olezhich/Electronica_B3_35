@@ -1,7 +1,8 @@
 //проверка переполнения для строк
 
 export function IsOverflow(mantissa) {
-    const ms = String(mantissa);
+    //const ms = String(mantissa);
+    let ms = mantissa;
     let len = ms.length;
     len = (ms.includes('-') ? len - 1 : len);
     len = (ms.includes('.') ? len - 1 : len);

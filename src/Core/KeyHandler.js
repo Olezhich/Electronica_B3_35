@@ -160,9 +160,9 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
     res.X.mantissa = res.X.mStr === '' ? 0 : Number(res.X.mStr);
     res.X.dStr = (res.X.dStr === '0' || res.X.dStr === '-0' ? '' : res.X.dStr);
     res.X.degree = res.X.dStr === '' ? 0 : Number(res.X.dStr);
-    res.X.mOverflow = IsOverflow(res.X.mantissa);
+    res.X.mOverflow = IsOverflow(res.X.mStr);
     
-    res.X.mOverflow = IsOverflow(res.X.mantissa);
+    //res.X.mOverflow = IsOverflow(res.X.mantissa);
 
     res.Y.mantissa = res.Y.mStr === '' ? 0 : Number(res.Y.mStr);
     res.Y.dStr = (res.Y.dStr === '0' || res.Y.dStr === '-0' ? '' : res.Y.dStr);

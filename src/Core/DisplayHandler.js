@@ -1,20 +1,3 @@
-// export function DisplayString(DisplayRegister, MemoryRegister, SelfState){
-//     if(SelfState.OverFlow){
-//         return('.0'.repeat(8) + '..0.0.');
-//     }
-//     let mem = (MemoryRegister.mStr === '') ? false : true;
-//     let displayStr = ((DisplayRegister.mantissa < 0) ? '' : ' ') + 
-//         preciseFloatToString(DisplayRegister.mantissa) + 
-//         (preciseFloatToString(DisplayRegister.mantissa).includes('.') ? '' : '.');
-//     const currentLen = displayStr.length;
-//     displayStr += ' '.repeat(10 - currentLen);
-//     let degreeStr = ((DisplayRegister.degree < 0) ? '' : ' ') + 
-//         ((DisplayRegister.degree > 1  || DisplayRegister.degree < 0) ? 
-//             String(DisplayRegister.degree) : (DisplayRegister.inputDegree && DisplayRegister.dStr ? String(DisplayRegister.degree) : ''));
-//     console.log(displayStr + degreeStr);
-//     return (displayStr + degreeStr);
-// }
-
 export function DisplayString(DisplayRegister, MemoryRegister, SelfState) {
     if (SelfState.OverFlow) {
         return '.0'.repeat(8) + '..0.0.';
@@ -22,8 +5,8 @@ export function DisplayString(DisplayRegister, MemoryRegister, SelfState) {
 
     const mem = MemoryRegister.mStr !== '';
     let displayStr = ((DisplayRegister.mantissa < 0) ? '' : ' ') +
-        preciseFloatToString(DisplayRegister.mantissa) +
-        (preciseFloatToString(DisplayRegister.mantissa).includes('.') ? '' : '.');
+        preciseFloatToString(DisplayRegister.mantissa, DisplayRegister.mStr) +
+        (preciseFloatToString(DisplayRegister.mantissa, DisplayRegister.mStr).includes('.') ? '' : '.');
     const currentLen = displayStr.length;
     displayStr += ' '.repeat(10 - currentLen);
 
@@ -53,10 +36,11 @@ export function DisplayString(DisplayRegister, MemoryRegister, SelfState) {
     return displayStr + degreeStr;
 }
 
-function preciseFloatToString(num) {
-    if (num === 0) return '0';
+function preciseFloatToString(num, mStr) {
+    //if (num === 0) return '0';
 
     const str = num.toString();
+    let s = str;
 
     // Если в строке есть 'e', то это экспонента — парсим вручную
     if (str.includes('e')) {
@@ -65,7 +49,7 @@ function preciseFloatToString(num) {
         const e = parseInt(exp, 10);
 
         // Преобразуем в строку с нужным сдвигом
-        let s = mantissa.replace('.', '');
+        s = mantissa.replace('.', '');
         let dotPos = mantissa.indexOf('.') !== -1 ? mantissa.indexOf('.') : s.length;
 
         // Позиция точки после сдвига
@@ -87,13 +71,36 @@ function preciseFloatToString(num) {
         if (s.includes('.')) {
             s = s.replace(/\.?0+$/, ''); // убираем хвостовые нули
         }
-        return s;
+        //return s;
     }
 
     // Если не экспонента — просто убираем хвостовые нули
-    if (str.includes('.')) {
-        return str.replace(/\.?0+$/, '');
+    if (s.includes('.') || num === 0) {
+        // return str.replace(/\.?0+$/, '');
+        const trg = countTrailingZerosInFraction(mStr);
+        const has = countTrailingZerosInFraction(s);
+        const cur = 8 - (s.length - (s.includes('-')? 1:0));
+        if(cur < 0){
+            return s.slice(0, 8);
+        }
+        const add = Math.min(cur, (trg - has >0? trg - has: 0));
+        console.log('ADD', add, s, cur);
+        if(add > 0){
+            let final = str;
+            if(num === 0)
+                final += '.'
+            return final + '0'.repeat(add);
+        }
     }
 
-    return str;
+    return s;
+}
+
+function countTrailingZerosInFraction(numberStr) {
+  const match = numberStr.match(/\.(\d*?)0*$/);
+  if (!match) return 0;
+  
+  const fractionPart = match[1] || '';
+  const trailingZeros = match[0].match(/0*$/)[0];
+  return trailingZeros.length;
 }
