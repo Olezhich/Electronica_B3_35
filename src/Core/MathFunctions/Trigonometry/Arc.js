@@ -8,7 +8,7 @@ export function ArcSinHandler({prev: {mantissa, degree}, rad}){
     if (!rad) {
         result = result * 180 / Math.PI;
     }
-    result = Number(result.toFixed(7));
+    //result = Number(result.toFixed(7));
     const res = {mantissa: result, degree: 0}
     return(res);
 }
@@ -23,7 +23,7 @@ export function ArcCosHandler({prev: {mantissa, degree}, rad}){
     if (!rad) {
         result = result * 180 / Math.PI;
     }
-    result = Number(result.toFixed(7));
+    //result = Number(result.toFixed(7));
     const res = {mantissa: result, degree: 0}
     return(res);
 }
@@ -38,7 +38,7 @@ export function ArcTanHandler({prev: {mantissa, degree}, rad}){
     if (!rad) {
         result = result * 180 / Math.PI;
     }
-    result = Number(result.toFixed(7));
+    //result = Number(result.toFixed(7));
     const res = {mantissa: result, degree: 0}
     return(res);
 }

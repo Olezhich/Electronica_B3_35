@@ -7,7 +7,7 @@ export function SinHandler({prev: {mantissa, degree}, rad}){
         val = mantissa/180 * Math.PI;
     }
     val = Math.sin(val);
-    val = Number(val.toFixed(7));
+    //val = Number(val.toFixed(7));
     const res = {mantissa: val, degree: 0}
     return(res);
 }
@@ -21,7 +21,7 @@ export function CosHandler({prev: {mantissa, degree}, rad}){
         val = mantissa/180 * Math.PI;
     }
     val = Math.cos(val);
-    val = Number(val.toFixed(7));
+    //val = Number(val.toFixed(7));
     const res = {mantissa: val, degree: 0}
     return(res);
 }
@@ -35,7 +35,7 @@ export function TanHandler({prev: {mantissa, degree}, rad}){
         return NaN;
     }
     val = Math.tan(val);
-    val = Number(val.toFixed(7));
+    //val = Number(val.toFixed(7));
     const res = {mantissa: val, degree: 0}
     return(res);
 }

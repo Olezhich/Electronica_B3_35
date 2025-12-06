@@ -39,6 +39,7 @@ test.each([
     {input: {mantissa: 0.000012345, degree: 0}, expected: {mantissa: 1.2344999, degree: -5}},
     {input: {mantissa: 0.25, degree: 2}, expected: {mantissa: 25, degree: 0}},
     {input: {mantissa: 25, degree: -2}, expected: {mantissa: 0.25, degree: 0}},
+    {input: {mantissa: -538676560, degree: -10}, expected: {mantissa: -5.3867656, degree: -2}}
     
 ])('NormalizeRegister($input.mantissa, $input.degree) - test: $expected.mantissa, $expected.degree', ({input, expected}) => {
     expect(NormalizeRegister(input)).toEqual(expected);

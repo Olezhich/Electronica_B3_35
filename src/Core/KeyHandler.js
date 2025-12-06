@@ -218,8 +218,29 @@ function FunctionHandler({prev, key, res, rad}){
         newMantissa = 1/prev.mantissa;
         newDegree = -prev.degree;
     }else if(key == '8'){ // 10^x
-        newMantissa = 10;
-        newDegree = prev.mantissa * Math.pow(10, degree);
+        const x = prev.mantissa * Math.pow(10, prev.degree);
+
+        if (x > 100) {
+            return true;
+        }
+        if (x < -100) {
+            return true;
+        }
+
+        const result = Math.pow(10, x);
+
+        // Обработка нуля (на случай x → -Infinity, но у тебя уже проверка)
+        if (result === 0) {
+            newMantissa = 0;
+            newDegree = 0;
+        } else {
+            // Нормализуем в научную запись: mantissa ∈ [1, 10)
+            newDegree = Math.floor(Math.log10(result));
+            newMantissa = result / Math.pow(10, newDegree);
+        }
+        // newMantissa = Math.pow(10, prev.mantissa * Math.pow(10, degree));
+        // newDegree = 0;
+        //newDegree = prev.mantissa * Math.pow(10, degree);
     }else if(key == '7'){ // e^x
         const maxExpValue = 230.258509; // ln(10^100)
 

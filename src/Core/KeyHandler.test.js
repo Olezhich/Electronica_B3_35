@@ -3,6 +3,7 @@ import { ResetRegister, ResetRS } from "./Register";
 import { ResetSelfState } from "./SelfState.js";
 
 test.each([
+
     //___INPUT NUMBERS___
     {inputSequence: ['.', '6', '7', '1', '5', '4'], expected: {...ResetRegister(), mantissa: 0.67154}, 
         comment: "Example 1: Enter number 0.67154"},
@@ -19,8 +20,10 @@ test.each([
     {inputSequence: ['7', '9', '.', '8', 'vp', '2', '6', '/-/', 'F', '6'], expected: {...ResetRegister(), mantissa: 8.9330845, degree: -13}, 
         comment: "Example 1: sqrt(79.8^{-26})"},
     //10^x
-    {inputSequence: ['8', '5', '.', '4', '/-/', 'F', '8'], expected: {...ResetRegister(), mantissa: 10, degree: -85.4}, 
+    {inputSequence: ['8', '5', '.', '4', '/-/', 'F', '8'], expected: {...ResetRegister(), mantissa: 3.9810717, degree: -86}, 
         comment: "Example 1: 10^{-85.4})"},
+    {inputSequence: ['25', 'vp', '2', '4', '/-/', 'F', '8'], expected: {...ResetRegister(), mantissa: 1, degree: 0}, 
+        comment: "Example 2: 10^{25^-24})"},
     // e^x
     {inputSequence: ['1', '9', '3', '.', '7', 'F', '7'], expected: {...ResetRegister(), mantissa: 1.326909, degree: 84}, 
         comment: "Example 1: e^{193.7})"},
@@ -68,8 +71,6 @@ test.each([
         '(', '0', '.', '9', 'vp', '5', '+', '2', '3', ')', '/', '2', ')', '=',
     ], expected: {...ResetRegister(), mantissa: -45006.996, degree: 0}, 
         comment: "Example 5: () - [()/]"},
-
-
 
 
 

@@ -70,6 +70,7 @@ function App() {
       <div className='meta'>
         <RegistersTable Registers={Registers}/>     
         <InstructionViewer />
+        <div data-testid="display">{SymbolStr}</div>
       </div>
     </main>
   );
