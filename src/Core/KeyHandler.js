@@ -291,6 +291,7 @@ function FunctionHandler({prev, key, res, rad}){
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
+        console.log('TAN', newMantissa, newDegree);
     }else if(key == 'pi'){ //n!
         let foo = FactorialHandler(prev);
         if(Number.isNaN(foo)){
@@ -306,12 +307,32 @@ function FunctionHandler({prev, key, res, rad}){
 
     let toFman = processed_1.mantissa;
     if('123457'.includes(key)){
-        toFman = Number(toFman.toFixed(5));
+        if(Math.abs(toFman) < 1){
+            toFman *= 10;
+            processed_1.degree -= 1;
+        }
+        const pmsm_1 = String(Math.abs(processed_1.mantissa));
+        const num_dig_1 = pmsm_1.includes('.') ? pmsm_1.length - 1 : pmsm_1.length;
+        if(processed_1.degree === 0 && Math.abs(processed_1.mantissa) < 1 && num_dig_1 >6){
+            processed_1.mantissa *= 10;
+            processed_1.degree -= 1;
+        }
+        toFman = Number(toFman.toFixed(5).slice(0,7));
     }
     const processed = NormalizeRegister({mantissa: toFman, degree: processed_1.degree});
 
     if('123457'.includes(key)){
-        processed.mantissa = Number(processed.mantissa.toFixed(5));
+        const pmsm = String(Math.abs(processed.mantissa));
+        const num_dig = pmsm.includes('.') ? pmsm.length - 1 : pmsm.length;
+        if(processed.degree === 0 && Math.abs(processed.mantissa) < 1 && num_dig >6){
+            processed.mantissa *= 10;
+            processed.degree -= 1;
+        }
+        if(Math.abs(processed.mantissa) > 1){
+            processed.degree += (8 - num_dig);
+            console.log(num_dig, processed.degree);
+        }
+        processed.mantissa = Number(processed.mantissa.toFixed(5).slice(0,7));
     }
 
     res.mStr = String(processed.mantissa);
@@ -351,12 +372,30 @@ function ArcHandler({prev, key, res, rad}){
 
     let toFman = processed_1.mantissa;
     if('123'.includes(key)){
-        toFman = Number(toFman.toFixed(5));
+        if(Math.abs(toFman) < 1){
+            toFman *= 10;
+            processed_1.degree -= 1;
+        }
+        const pmsm_1 = String(Math.abs(processed_1.mantissa));
+        const num_dig_1 = pmsm_1.includes('.') ? pmsm_1.length - 1 : pmsm_1.length;
+        if(processed_1.degree === 0 && Math.abs(processed_1.mantissa) < 1 && num_dig_1 >6){
+            processed_1.mantissa *= 10;
+            processed_1.degree -= 1;
+        }
+        toFman = Number(toFman.toFixed(5).slice(0,7));
     }
     const processed = NormalizeRegister({mantissa: toFman, degree: processed_1.degree});
 
     if('123'.includes(key)){
-        processed.mantissa = Number(processed.mantissa.toFixed(5));
+        const num_dig = String(Math.abs(processed.mantissa)).includes('.') ? String(Math.abs(processed.mantissa)).length - 1 : String(Math.abs(processed.mantissa)).length;
+        if(processed.degree === 0 && Math.abs(processed.mantissa) < 1 && num_dig >6){
+            processed.mantissa *= 10;
+            processed.degree -= 1;
+        }
+        if(Math.abs(processed.mantissa) > 1){
+            processed.degree += 8 - num_dig;
+        }
+        processed.mantissa = Number(processed.mantissa.toFixed(5).slice(0,7));
     }
 
 
@@ -409,7 +448,16 @@ function EvalHandler(prev){
 
         const processed_1 = NormalizeRegister({mantissa: newMantissa, degree: 0});
         let toFman = processed_1.mantissa;
-        toFman = Number(toFman.toFixed(5));
+        if(Math.abs(toFman) < 1){
+            toFman *= 10;
+            processed_1.degree -= 1;
+        }
+        const num_dig_1 = String(Math.abs(processed_1.mantissa)).includes('.') ? String(Math.abs(processed_1.mantissa)).length - 1 : String(Math.abs(processed_1.mantissa)).length;
+        if(processed_1.degree === 0 && Math.abs(processed_1.mantissa) < 1 && num_dig_1 >6){
+            processed_1.mantissa *= 10;
+            processed_1.degree -= 1;
+        }
+        toFman = Number(toFman.toFixed(5).slice(0,7));
         newMantissa = toFman * Math.pow(10, processed_1.degree);
     }else{
         return null;
@@ -417,7 +465,15 @@ function EvalHandler(prev){
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: 0});
     if(CurrentOper === 'x^y'){
-        processed.mantissa = Number(processed.mantissa.toFixed(5));
+        const num_dig = String(Math.abs(processed.mantissa)).includes('.') ? String(Math.abs(processed.mantissa)).length - 1 : String(Math.abs(processed.mantissa)).length;
+        if(processed.degree === 0 && Math.abs(processed.mantissa) < 1 && num_dig >6){
+            processed.mantissa *= 10;
+            processed.degree -= 1;
+        }
+        if(Math.abs(processed.mantissa) > 1){
+            processed.degree += 8 - num_dig;
+        }
+        processed.mantissa = Number(processed.mantissa.toFixed(5).slice(0,7));
     }
 
     if(prev.PrevOperation !== '='){

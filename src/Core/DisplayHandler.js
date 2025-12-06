@@ -75,19 +75,19 @@ function preciseFloatToString(num, mStr) {
     }
 
     // Если не экспонента — просто убираем хвостовые нули
-    if (s.includes('.') || num === 0) {
+    if (mStr.includes('.') || num === 0) {
         // return str.replace(/\.?0+$/, '');
         const trg = countTrailingZerosInFraction(mStr);
         const has = countTrailingZerosInFraction(s);
-        const cur = 8 - (s.length - (s.includes('-')? 1:0));
+        const cur = 9 - (s.length - (s.includes('-')? 1:0));
         if(cur < 0){
-            return s.slice(0, 8);
+            return s.slice(0, 9);
         }
         const add = Math.min(cur, (trg - has >0? trg - has: 0));
         console.log('ADD', add, s, cur);
         if(add > 0){
             let final = str;
-            if(num === 0)
+            if(s.length === 1)
                 final += '.'
             return final + '0'.repeat(add);
         }
