@@ -50,13 +50,13 @@ test.each([
         comment: "Example 1: 23!"},
     // arcsin(x)
     {inputSequence: ['0', '.', '5', 'arc', '1'], expected: {...ResetRegister(), mantissa: 30, degree: 0}, 
-        comment: "Example 1: arcsin(30)"},
+        comment: "Example 1: arcsin(0.5)"},
     // arccos(x)
     {inputSequence: ['0', '.', '5', '/-/', 'arc', '2'], expected: {...ResetRegister(), mantissa: 120, degree: 0}, 
-        comment: "Example 1: arcsin(30)"},
+        comment: "Example 1: arccos(-0.5)"},
     // arctan(x)
     {inputSequence: ['1', '/-/', 'arc', '3'], expected: {...ResetRegister(), mantissa: -45, degree: 0}, 
-        comment: "Example 1: arcsin(30)"},
+        comment: "Example 1: arctan(-1)"},
     //___ARITHMETICS___
     // + - * /
     {inputSequence: ['6', '.', '3', '+', '5', '.', '6', '5', '='], expected: {...ResetRegister(), mantissa: 11.95, degree: 0}, 

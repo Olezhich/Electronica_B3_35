@@ -90,7 +90,7 @@ export function NormalizeRegister({mantissa, degree}) {
 
         }else{
             //число нельзя представить без степени, оно будет представлено как мантисса и порядок
-            while(mantissa > 10){
+            while(Math.abs(mantissa) > 10){
                 mantissa /= 10;
                 degree++;
             }
@@ -105,7 +105,7 @@ export function NormalizeRegister({mantissa, degree}) {
             mean_zeros = true;
         }else{
             //число нельзя представить без степени, оно будет представлено как мантисса и порядок
-            while(mantissa > 10){
+            while(Math.abs(mantissa) > 10){
                 mantissa /= 10;
                 degree++;
             }

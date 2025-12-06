@@ -328,7 +328,7 @@ function FunctionHandler({prev, key, res, rad}){
             processed.mantissa *= 10;
             processed.degree -= 1;
         }
-        if(Math.abs(processed.mantissa) > 1){
+        if(Math.abs(processed.mantissa) > 1 && num_dig > 6){
             processed.degree += (8 - num_dig);
             console.log(num_dig, processed.degree);
         }
@@ -392,7 +392,7 @@ function ArcHandler({prev, key, res, rad}){
             processed.mantissa *= 10;
             processed.degree -= 1;
         }
-        if(Math.abs(processed.mantissa) > 1){
+        if(Math.abs(processed.mantissa) > 1  && num_dig > 6){
             processed.degree += 8 - num_dig;
         }
         processed.mantissa = Number(processed.mantissa.toFixed(5).slice(0,7));
@@ -470,7 +470,7 @@ function EvalHandler(prev){
             processed.mantissa *= 10;
             processed.degree -= 1;
         }
-        if(Math.abs(processed.mantissa) > 1){
+        if(Math.abs(processed.mantissa) > 1  && num_dig > 6){
             processed.degree += 8 - num_dig;
         }
         processed.mantissa = Number(processed.mantissa.toFixed(5).slice(0,7));
