@@ -25,7 +25,7 @@ test.each([
     {inputSequence: ['25', 'vp', '2', '4', '/-/', 'F', '8'], expected: {...ResetRegister(), mantissa: 1, degree: 0}, 
         comment: "Example 2: 10^{25^-24})"},
     // e^x
-    {inputSequence: ['1', '9', '3', '.', '7', 'F', '7'], expected: {...ResetRegister(), mantissa: 1.326909, degree: 84}, 
+    {inputSequence: ['1', '9', '3', '.', '7', 'F', '7'], expected: {...ResetRegister(), mantissa: 1.32691, degree: 84}, 
         comment: "Example 1: e^{193.7})"},
     // ln(x)
     {inputSequence: ['1', '.', '3', '2', '6', '9', '1', 'vp', '8', '4', 'F', '4'], expected: {...ResetRegister(), mantissa: 193.7, degree: 0}, 
@@ -41,7 +41,7 @@ test.each([
         comment: "Example 1: sin(30)"},
     // cos(x)
     {inputSequence: ['1', '2', '0', 'F', '2'], expected: {...ResetRegister(), mantissa: -0.5, degree: 0}, 
-        comment: "Example 1: sin(30)"},
+        comment: "Example 1: cos(120)"},
     // tan(x)
     {inputSequence: ['3', '1', '5', 'F', '3'], expected: {...ResetRegister(), mantissa: -1, degree: 0}, 
         comment: "Example 1: tan(315)"},

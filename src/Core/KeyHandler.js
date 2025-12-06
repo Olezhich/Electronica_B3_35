@@ -161,7 +161,6 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
     res.X.dStr = (res.X.dStr === '0' || res.X.dStr === '-0' ? '' : res.X.dStr);
     res.X.degree = res.X.dStr === '' ? 0 : Number(res.X.dStr);
     res.X.mOverflow = IsOverflow(res.X.mStr);
-    
     //res.X.mOverflow = IsOverflow(res.X.mantissa);
 
     res.Y.mantissa = res.Y.mStr === '' ? 0 : Number(res.Y.mStr);
@@ -303,7 +302,17 @@ function FunctionHandler({prev, key, res, rad}){
         return false;
     }
 
-    const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
+    const processed_1 = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
+
+    let toFman = processed_1.mantissa;
+    if('123457'.includes(key)){
+        toFman = Number(toFman.toFixed(5));
+    }
+    const processed = NormalizeRegister({mantissa: toFman, degree: processed_1.degree});
+
+    if('123457'.includes(key)){
+        processed.mantissa = Number(processed.mantissa.toFixed(5));
+    }
 
     res.mStr = String(processed.mantissa);
     res.dStr = String(processed.degree);
@@ -338,7 +347,18 @@ function ArcHandler({prev, key, res, rad}){
         return false;
     }
 
-    const processed = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
+    const processed_1 = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
+
+    let toFman = processed_1.mantissa;
+    if('123'.includes(key)){
+        toFman = Number(toFman.toFixed(5));
+    }
+    const processed = NormalizeRegister({mantissa: toFman, degree: processed_1.degree});
+
+    if('123'.includes(key)){
+        processed.mantissa = Number(processed.mantissa.toFixed(5));
+    }
+
 
     res.mStr = String(processed.mantissa);
     res.dStr = String(processed.degree);
@@ -386,11 +406,20 @@ function EvalHandler(prev){
             return null;
         }
         newMantissa = result;
+
+        const processed_1 = NormalizeRegister({mantissa: newMantissa, degree: 0});
+        let toFman = processed_1.mantissa;
+        toFman = Number(toFman.toFixed(5));
+        newMantissa = toFman * Math.pow(10, processed_1.degree);
     }else{
         return null;
     }
 
     const processed = NormalizeRegister({mantissa: newMantissa, degree: 0});
+    if(CurrentOper === 'x^y'){
+        processed.mantissa = Number(processed.mantissa.toFixed(5));
+    }
+
     if(prev.PrevOperation !== '='){
         return( {...prev, X: {...ResetRegister(), mStr: String(processed.mantissa), dStr: String(processed.degree), operation: '='}, Y: {...prev.X, operation: prev.Y.operation}});
     }else{

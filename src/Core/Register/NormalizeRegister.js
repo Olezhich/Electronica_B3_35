@@ -1,6 +1,9 @@
 
 //Используется для нормализации мантиссы и порядка после математических функций
 
+
+
+
 export function ExtractSignificantDigits(num) {
     if (num === 0) {
         return { digits: 0, shift: 0 };
@@ -22,10 +25,12 @@ export function ExtractSignificantDigits(num) {
     }
     
     const str_num = String(num);
-    const digits = Number(str_num.substring(0,8)) * sign;
+    let digits = Number(str_num.substring(0,8)) * sign;
 
     return { digits, shift };
 }
+
+
 
 export function CalculateMeanZeros(mantissa) {
   let mean_zeros = 0;
@@ -109,6 +114,8 @@ export function NormalizeRegister({mantissa, degree}) {
 
     const round_val = 10 ** (m_len + CalculateMeanZeros(mantissa));
     mantissa = Math.round(mantissa * round_val) / round_val;
+
+    //mantissa = Number(mantissa.toFixed(m_len + CalculateMeanZeros(mantissa)));
     // console.log('NR', m_len, round_val, mantissa, degree);
     return { mantissa: mantissa, degree: degree};
 }
