@@ -29,9 +29,12 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
                 new_num_flag = true;
             }else{
                 error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
+                new_num_flag = true;
             }
-        else if(SelfState.ArcMode)
+        else if(SelfState.ArcMode){
             error = error | ArcHandler({prev: prev.X, key, res: res.X, rad});
+            new_num_flag = true;
+        }
         else{
             if(new_num_flag){
                 prev.X = ResetRegister();
@@ -61,6 +64,7 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
         key = prev.PrevOperation;
     }else if(key === 'vp'){
         res.X.inputDegree = true;
+        key = prev.PrevOperation;
     }else if(key === 'C'){
         if(SelfState.FunctionalMode){
             ;
@@ -75,6 +79,8 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
         else{
             res.X = {...ResetRegister(), mStr: '3.1415926'};
         }
+        key = prev.PrevOperation;
+        new_num_flag = true;
     }else if(key === 'F'){
         return ({register: null, state: {...SelfState, FunctionalMode: true}});
     }else if(key === 'arc'){
@@ -88,6 +94,7 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
             res.Y = {...prev.X, operation: prev.Y.operation};
         }
         key = prev.PrevOperation;
+        new_num_flag = true;
     }else if('+-*/'.includes(key)){
         if(SelfState.FunctionalMode){
             let tmp = MemoryHandler(prev, key);
@@ -97,7 +104,7 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
                 error = true;
             }
         }else{
-            if(res.Y.mStr && res.X.operation != '='){ //сначала считаем промежуточный итог
+            if(res.Y.mStr && res.X.operation != '=' && res.PrevOperation != '='){ //сначала считаем промежуточный итог
                 let tmp = EvalHandler(prev);
                 if(tmp){
                     res = tmp;
@@ -306,7 +313,7 @@ function FunctionHandler({prev, key, res, rad}){
     const processed_1 = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
 
     let toFman = processed_1.mantissa;
-    if('123457'.includes(key)){
+    if('1234578'.includes(key)){
         if(Math.abs(toFman) < 1){
             toFman *= 10;
             processed_1.degree -= 1;
@@ -321,7 +328,7 @@ function FunctionHandler({prev, key, res, rad}){
     }
     const processed = NormalizeRegister({mantissa: toFman, degree: processed_1.degree});
 
-    if('123457'.includes(key)){
+    if('1234578'.includes(key)){
         const pmsm = String(Math.abs(processed.mantissa));
         const num_dig = pmsm.includes('.') ? pmsm.length - 1 : pmsm.length;
         if(processed.degree === 0 && Math.abs(processed.mantissa) < 1 && num_dig >6){
