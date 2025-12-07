@@ -298,7 +298,6 @@ function FunctionHandler({prev, key, res, rad}){
         }
         newMantissa = foo.mantissa;
         newDegree = foo.degree;
-        console.log('TAN', newMantissa, newDegree);
     }else if(key == 'pi'){ //n!
         let foo = FactorialHandler(prev);
         if(Number.isNaN(foo)){
@@ -334,10 +333,8 @@ function FunctionHandler({prev, key, res, rad}){
         if(processed.degree === 0 && Math.abs(processed.mantissa) < 1 && num_dig >6){
             processed.mantissa *= 10;
             processed.degree -= 1;
-        }
-        if(Math.abs(processed.mantissa) > 1 && num_dig > 6){
+        }else if(Math.abs(processed.mantissa) > 1 && num_dig > 6){
             processed.degree += (8 - num_dig);
-            console.log(num_dig, processed.degree);
         }
         processed.mantissa = Number(processed.mantissa.toFixed(5).slice(0,7));
     }
@@ -376,7 +373,6 @@ function ArcHandler({prev, key, res, rad}){
     }
 
     const processed_1 = NormalizeRegister({mantissa: newMantissa, degree: newDegree});
-
     let toFman = processed_1.mantissa;
     if('123'.includes(key)){
         if(Math.abs(toFman) < 1){
@@ -398,8 +394,7 @@ function ArcHandler({prev, key, res, rad}){
         if(processed.degree === 0 && Math.abs(processed.mantissa) < 1 && num_dig >6){
             processed.mantissa *= 10;
             processed.degree -= 1;
-        }
-        if(Math.abs(processed.mantissa) > 1  && num_dig > 6){
+        }else if(Math.abs(processed.mantissa) > 1  && num_dig > 6){
             processed.degree += 8 - num_dig;
         }
         processed.mantissa = Number(processed.mantissa.toFixed(5).slice(0,7));
@@ -476,8 +471,7 @@ function EvalHandler(prev){
         if(processed.degree === 0 && Math.abs(processed.mantissa) < 1 && num_dig >6){
             processed.mantissa *= 10;
             processed.degree -= 1;
-        }
-        if(Math.abs(processed.mantissa) > 1  && num_dig > 6){
+        }else if(Math.abs(processed.mantissa) > 1  && num_dig > 6){
             processed.degree += 8 - num_dig;
         }
         processed.mantissa = Number(processed.mantissa.toFixed(5).slice(0,7));

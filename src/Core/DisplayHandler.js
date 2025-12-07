@@ -84,7 +84,6 @@ function preciseFloatToString(num, mStr) {
             return s.slice(0, 9);
         }
         const add = Math.min(cur, (trg - has >0? trg - has: 0));
-        console.log('ADD', add, s, cur);
         if(add > 0){
             let final = str;
             if(s.length === 1)
