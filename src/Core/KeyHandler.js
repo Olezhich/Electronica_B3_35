@@ -42,8 +42,8 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
             }
             NumberHandler({prev: prev.X, key, res: res.X});
             new_num_flag = false;
-            key = prev.PrevOperation;
         }
+        key = prev.PrevOperation;
     }else if(key === '/-/'){
         if(SelfState.FunctionalMode)
             error = error | FunctionHandler({prev: prev.X, key, res: res.X, rad});
@@ -116,8 +116,8 @@ export function KeyHandler({prev, key, SelfState, PowerState}){
             res.X.operation = key;
             bin_operation_flag = true;
             res.Y = {...res.X};
-            new_num_flag = true;
         }
+        new_num_flag = true;
     }else if(key === '('){
         if(SelfState.FunctionalMode){
             let tmp = MemoryHandler(prev, key);
@@ -521,7 +521,7 @@ function CloseBracketHandler(prev){
 }
 
 function MemoryHandler(prev, key){
-    let mem_mantissa = prev.M.mantissa * Math.pow(10, prev.Y.degree);
+    let mem_mantissa = prev.M.mantissa * Math.pow(10, prev.M.degree);
     const dr = prev.X.mantissa * Math.pow(10, prev.X.degree);
     if(key ==='+'){
         mem_mantissa += dr;
