@@ -19,18 +19,24 @@ export function DisplayString(DisplayRegister, MemoryRegister, SelfState) {
     }
 
     let degreeStr = '';
+
+    let deg_str = String(Math.abs(DisplayRegister.degree));
+    if(deg_str.length === 1){
+        deg_str = ' ' + deg_str;
+    }
+
     if (mem) {
         const sign = DisplayRegister.degree < 0 ? '-' : ' ';
         if (degreeValue !== null) {
             // Степень не ноль — показываем модуль после 'm'
-            degreeStr = sign + 'm' + Math.abs(DisplayRegister.degree);
+            degreeStr = sign + 'm' + deg_str;
         } else {
             // Степень 0 — только 'm'
             degreeStr = sign + 'm';
         }
     } else if (degreeValue !== null) {
         // Без 'm' — как было
-        degreeStr = (DisplayRegister.degree < 0) ? String(DisplayRegister.degree) : ' ' + String(DisplayRegister.degree);
+        degreeStr = (DisplayRegister.degree < 0) ? '-' + deg_str : ' ' + deg_str;
     }
 
     return displayStr + degreeStr;

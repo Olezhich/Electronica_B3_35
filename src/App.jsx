@@ -70,8 +70,6 @@ function App() {
       <div className='meta'>
         <RegistersTable Registers={Registers}/>     
         <InstructionViewer />
-        <div data-testid="display">{SymbolStr}</div>
-        <div data-testid="display">{Registers.PrevOperation}</div>
       </div>
     </main>
   );
